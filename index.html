@@ -10,10 +10,10 @@
     <div class="container">
         <nav>
             <ul>
-                <li><a href="#" id="homeTab" class="enabled">Home</a></li>
+                <li><a href="#" id="homeTab">Home</a></li>
                 <li><a href="#" id="statusTab" class="disabled">Status</a></li>
-                <li><a href="#" id="contactTab" class="disabled">Contact</a></li>
-                <li><a href="#" id="loginTab">Login / Register</a></li>
+                <li><a href="#" id="aboutusTab" class="disabled">About us</a></li>
+                <li><a href="#" id="loginTab">Login/Register</a></li>
             </ul>
         </nav>
         <header>
@@ -22,6 +22,39 @@
         </header>
 
         <div class="main-content">
+            
+            <div class="bg-[var(--background)] text-[var(--foreground)]">
+                <header class="flex items-center justify-between p-4 bg-[var(--background)]">
+                  <div class="flex items-center space-x-4">
+                    <img src="<div class="bg-[var(--background)] text-[var(--foreground)]">
+  <header class="flex items-center justify-between p-4 bg-[var(--background)]">
+    
+  </header>
+  <main class="flex flex-col md:flex-row items-center justify-between p-8 md:p-16 bg-[var(--background)]">
+    <div class="text-center md:text-left md:w-1/2 space-y-4">
+      <h1 class="text-4xl font-bold text-[var(--primary)]">The Smartest & Easiest-To-Use GPS based toll collection.</h1>
+      <p class="text-lg text-[var(--muted-foreground)]">Get tracking in mere minutes.</p>
+      
+    </div>
+    <div class="mt-8 md:mt-0 md:w-1/2 flex justify-center">
+      <img src="" alt="Phone displaying GPS tracking map" class="h-80 md:h-auto">
+    </div>
+  </main>
+</div>" alt="Gps_based_toll_collection" class="h-10">
+                  </div>
+                </header>
+                <main class="flex flex-col md:flex-row items-center justify-between p-8 md:p-16 bg-[var(--background)]">
+                  <div class="text-center md:text-left md:w-1/2 space-y-4">
+                    <h1 class="text-4xl font-bold text-[var(--primary)]">The Smartest & Easiest-To-Use GPS based toll collection.</h1>
+                    <p class="text-lg text-[var(--muted-foreground)]">Get tracking in mere minutes.</p>
+                    
+                  </div>
+                  <div class="mt-8 md:mt-0 md:w-1/2 flex justify-center">
+                    <img src="C:\Users\VICTUS\Downloads\intel project\WhatsApp Image 2024-07-04 at 12.45.54 AM.jpegC:\Users\VICTUS\Downloads\intel project\WhatsApp Image 2024-07-04 at 12.45.54 AM.jpeg" alt="Phone displaying GPS tracking map" class="h-80 md:h-auto">
+                  </div>
+                </main>
+              </div>
+
             <!-- User Profile Section (Initially hidden) -->
             <div id="userProfile" class="user-profile" style="display: none;">
                 <h2>User Profile</h2>
@@ -65,17 +98,8 @@
                         <input type="text" id="userName" name="userName"><br><br>
                         <label for="vehicleId">Vehicle ID:</label><br>
                         <input type="text" id="vehicleId" name="vehicleId"><br><br>
-                        <label for="startPoint">Start Point:</label><br>
-                        <input type="text" id="startPoint" name="startPoint"><br><br>
-                        <label for="endPoint">End Point:</label><br>
-                        <input type="text" id="endPoint" name="endPoint"><br><br>
+                        
                     </div>
-                    <div id="mapContainer">
-                        <canvas id="vehicleMap" width="400" height="400"></canvas>
-                    </div>
-                    <button id="startTrip">Start Trip</button>
-                    <button id="stopTrip">Stop Trip</button>
-                    <button id="resetTrip">Reset Trip</button>
                 </div>
 
                 <!-- Status Content -->
@@ -89,5 +113,17 @@
     </div>
 
     <script src="interface.js"></script>
+    <script>
+        // JavaScript code to show key features on home tab activation
+        document.getElementById('homeTab').addEventListener('click', function(event) {
+            event.preventDefault();
+            document.getElementById('keyFeatures').style.display = 'block';
+            document.getElementById('userProfile').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('gpsInterface').style.display = 'none';
+            document.getElementById('statusContent').style.display = 'none';
+        });
+    </script>
 </body>
 </html>
