@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPS Based Toll Collection</title>
+    <link rel="stylesheet" href="D:\intel\codes\style.css">
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <ul>
+                <li><a href="#" id="homeTab" class="enabled">Home</a></li>
+                <li><a href="#" id="statusTab" class="disabled">Status</a></li>
+                <li><a href="#" id="contactTab" class="disabled">Contact</a></li>
+                <li><a href="#" id="loginTab">Login / Register</a></li>
+            </ul>
+        </nav>
+        <header>
+            <h1>GPS BASED TOLL COLLECTION</h1>
+            <p>A test model created for calculating the fees according to the distance travelled.</p>
+        </header>
+
+        <div class="main-content">
+            <!-- User Profile Section (Initially hidden) -->
+            <div id="userProfile" class="user-profile" style="display: none;">
+                <h2>User Profile</h2>
+                <p><strong>User ID:</strong> <span id="profileUserId">CC-001</span></p>
+                <p><strong>Name:</strong> <span id="profileUserName">Navya Prasad</span></p>
+                <p><strong>Vehicle ID:</strong> <span id="profileVehicleId">V001</span></p>
+                <p><strong>Vehicle Type:</strong> <span id="profileVehicleType">Sedan</span></p>
+                <p><strong>GPS ID:</strong> <span id="profileGpsId">G001</span></p>
+            </div>
+
+            <!-- Main Content -->
+            <div class="content">
+                <!-- Login form -->
+                <div id="loginForm">
+                    <form id="loginFormElem" action="#" method="POST">
+                        <label for="username">Username:</label><br>
+                        <input type="text" id="username" name="username" required><br><br>
+                        <label for="password">Password:</label><br>
+                        <input type="password" id="password" name="password" required><br><br>
+                        <input type="submit" value="Login">
+                    </form>
+                    <p>Don't have an account? <a href="#" id="registerLink">Create new account</a></p>
+                </div>
+
+                <!-- Registration form -->
+                <div id="registerForm" style="display: none;">
+                    <form id="registerFormElem" action="#" method="POST">
+                        <label for="newUsername">New Username:</label><br>
+                        <input type="text" id="newUsername" name="newUsername" required><br><br>
+                        <label for="newPassword">New Password:</label><br>
+                        <input type="password" id="newPassword" name="newPassword" required><br><br>
+                        <input type="submit" value="Register">
+                    </form>
+                </div>
+
+                <!-- GPS Toll Collection Interface -->
+                <div id="gpsInterface" style="display: none;">
+                    <h2>GPS Toll-Based Collection Interface</h2>
+                    <div id="profile">
+                        <label for="userName">Name:</label><br>
+                        <input type="text" id="userName" name="userName"><br><br>
+                        <label for="vehicleId">Vehicle ID:</label><br>
+                        <input type="text" id="vehicleId" name="vehicleId"><br><br>
+                        <label for="startPoint">Start Point:</label><br>
+                        <input type="text" id="startPoint" name="startPoint"><br><br>
+                        <label for="endPoint">End Point:</label><br>
+                        <input type="text" id="endPoint" name="endPoint"><br><br>
+                    </div>
+                    <div id="mapContainer">
+                        <canvas id="vehicleMap" width="400" height="400"></canvas>
+                    </div>
+                    <button id="startTrip">Start Trip</button>
+                    <button id="stopTrip">Stop Trip</button>
+                    <button id="resetTrip">Reset Trip</button>
+                </div>
+
+                <!-- Status Content -->
+                <div id="statusContent" style="display: none;">
+                    <h2>Payment Details</h2>
+                    <p><strong>Total Distance:</strong> <span id="totalDistance"></span></p>
+                    <p><strong>Total Toll:</strong> <span id="totalToll"></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="D:\intel\codes\interface.js"></script>
+</body>
+</html>
