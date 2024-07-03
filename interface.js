@@ -1,4 +1,3 @@
-// Variable to track login status
 let isLoggedIn = false;
 
 // Function to handle login
@@ -7,51 +6,62 @@ function handleLogin(event) {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    // Fetch and parse CSV for login credentials
-    fetch('D:/intel/hashed_passwords.csv')  // Adjust the path to your CSV file
-        .then(response => response.text())
-        .then(data => {
-            // Parse CSV data
-            const lines = data.split('\n');
-            const headers = lines[0].split(',');
+    const validUsername = 'Navya Prasad';
+    const validPassword = 'codeclan';
 
-            // Find matching user
-            let isLoggedIn = false;
-            for (let i = 1; i < lines.length; i++) {
-                const values = lines[i].split(',');
-                const storedUsername = values[0].trim(); // Trim whitespace
-                const storedPassword = values[1].trim(); // Trim whitespace
-
-                // Replace this with your actual hashing and comparison logic
-                const hashedPassword = hashPassword(password);  // Example function to hash password
-
-                // Validate credentials
-                if (username === storedUsername && hashedPassword === storedPassword) {
-                    isLoggedIn = true;
-                    break;
-                }
-            }
-
-            if (isLoggedIn) {
-                // Login successful
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('registerForm').style.display = 'none';
-                enableTabs();
-                showUserProfile();
-            } else {
-                // Invalid credentials
-                alert('Invalid username or password');
-            }
-        })
-        .catch(error => console.error('Error fetching CSV:', error));
+    if (username === validUsername && password === validPassword) {
+        isLoggedIn = true;
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('registerForm').style.display = 'none';
+        enableTabs();
+        showUserProfile();
+    } else {
+        alert('Invalid username or password');
+    }
 }
-
-// Example function to hash password (replace with your actual hashing mechanism)
-function hashPassword(password) {
-    // Implement your hashing logic here
-    // Example: return someHashingFunction(password);
-    return password; // Placeholder; replace with actual hashing logic
-}
+		 type="text/javascript"
+			window.tailwind.config = {
+				darkMode: ['class'],
+				theme: {
+					extend: {
+						colors: {
+							border: 'hsl(var(--border))',
+							input: 'hsl(var(--input))',
+							ring: 'hsl(var(--ring))',
+							background: 'hsl(var(--background))',
+							foreground: 'hsl(var(--foreground))',
+							primary: {
+								DEFAULT: 'hsl(var(--primary))',
+								foreground: 'hsl(var(--primary-foreground))'
+							},
+							secondary: {
+								DEFAULT: 'hsl(var(--secondary))',
+								foreground: 'hsl(var(--secondary-foreground))'
+							},
+							destructive: {
+								DEFAULT: 'hsl(var(--destructive))',
+								foreground: 'hsl(var(--destructive-foreground))'
+							},
+							muted: {
+								DEFAULT: 'hsl(var(--muted))',
+								foreground: 'hsl(var(--muted-foreground))'
+							},
+							accent: {
+								DEFAULT: 'hsl(var(--accent))',
+								foreground: 'hsl(var(--accent-foreground))'
+							},
+							popover: {
+								DEFAULT: 'hsl(var(--popover))',
+								foreground: 'hsl(var(--popover-foreground))'
+							},
+							card: {
+								DEFAULT: 'hsl(var(--card))',
+								foreground: 'hsl(var(--card-foreground))'
+							},
+						},
+					}
+				}
+			}
 
 // Function to show user profile
 function showUserProfile() {
@@ -65,8 +75,9 @@ function showUserProfile() {
 
 // Function to enable tabs
 function enableTabs() {
+    document.getElementById('homeTab').classList.remove('disabled');
     document.getElementById('statusTab').classList.remove('disabled');
-    document.getElementById('contactTab').classList.remove('disabled');
+    document.getElementById('aboutusTab').classList.remove('disabled');
 }
 
 // Event listeners
@@ -118,5 +129,5 @@ document.getElementById('statusTab').addEventListener('click', function(event) {
         gpsInterface.style.display = 'none'; // Hide GPS interface if shown
     } else {
         statusContent.style.display = 'none';
-    }
+    }
 });
