@@ -24,20 +24,21 @@
         <div class="main-content">
             <!-- Key Features Section -->
             <div id="keyFeatures">
-                <h2>
+                <ul>
                     <li>Real-time toll calculation based on GPS data.</li>
                     <li>User-friendly interface for managing toll payments.</li>
                     <li>Secure login and registration system.</li>
-                </h2>
+                </ul>
             </div>
+
             <!-- User Profile Section (Initially hidden) -->
             <div id="userProfile" class="user-profile" style="display: none;">
                 <h2>User Profile</h2>
-                <p><strong>User ID:</strong> <span id="profileUserId">CC-001</span></p>
-                <p><strong>Name:</strong> <span id="profileUserName">Navya Prasad</span></p>
-                <p><strong>Vehicle ID:</strong> <span id="profileVehicleId">V001</span></p>
-                <p><strong>Vehicle Type:</strong> <span id="profileVehicleType">Sedan</span></p>
-                <p><strong>GPS ID:</strong> <span id="profileGpsId">G001</span></p>
+                <p><strong>User ID:</strong> <span id="profileUserId"></span></p>
+                <p><strong>Username:</strong> <span id="profileUserName"></span></p>
+                <p><strong>Vehicle ID:</strong> <span id="profileVehicleId"></span></p>
+                <p><strong>Vehicle Type:</strong> <span id="profileVehicleType"></span></p>
+                <p><strong>GPS ID:</strong> <span id="profileGpsId"></span></p>
             </div>
 
             <!-- Main Content -->
@@ -69,11 +70,10 @@
                 <div id="gpsInterface" style="display: none;">
                     <h2>GPS Toll-Based Collection Interface</h2>
                     <div id="profile">
-                        <label for="userName">Name:</label><br>
+                        <label for="userName">Username:</label><br>
                         <input type="text" id="userName" name="userName"><br><br>
                         <label for="vehicleId">Vehicle ID:</label><br>
                         <input type="text" id="vehicleId" name="vehicleId"><br><br>
-                        
                     </div>
                 </div>
 
@@ -88,17 +88,3 @@
     </div>
 
     <script src="interface.js"></script>
-    <script>
-        // JavaScript code to show key features on home tab activation
-        document.getElementById('homeTab').addEventListener('click', function(event) {
-            event.preventDefault();
-            document.getElementById('keyFeatures').style.display = 'block';
-            document.getElementById('userProfile').style.display = 'none';
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('registerForm').style.display = 'none';
-            document.getElementById('gpsInterface').style.display = 'none';
-            document.getElementById('statusContent').style.display = 'none';
-        });
-    </script>
-</body>
-</html>
