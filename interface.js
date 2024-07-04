@@ -1,136 +1,139 @@
 let isLoggedIn = false;
-        let users = [];
+let users = [];
+let journeys = [];
 
-        // Function to load users from CSV
-        async function loadUsers() {
-            const response = await fetch('user_data_with_15_examples.csv');
-            const data = await response.text();
-            parseCSV(data);
-        }
+// Function to fetch user and journey data from backend
+function fetchDataFromBackend() {
+    const userCsvPath = 'http://127.0.0.1:5000/users';  // Backend endpoint to fetch user data
+    const journeyCsvPath = 'http://127.0.0.1:5000/journeys';  // Backend endpoint to fetch journey data
 
-        // Function to parse CSV data
-        function parseCSV(data) {
-            const lines = data.split('\n');
-            for (let i = 1; i < lines.length; i++) {
-                const line = lines[i].trim();
-                if (line) {
-                    const [username, password, userId, vehicleId, vehicleType, gpsId] = line.split(',');
-                    users.push({
-                        username: username.trim(),
-                        password: password.trim(),
-                        userId: userId.trim(),
-                        vehicleId: vehicleId.trim(),
-                        vehicleType: vehicleType.trim(),
-                        gpsId: gpsId.trim()
-                    });
-                }
-            }
-        }
+    // Fetch user data
+    fetch(userCsvPath)
+        .then(response => response.json())
+        .then(data => {
+            users = JSON.parse(data);
+        })
+        .catch(error => console.error('Error fetching user data:', error));
 
-        // Function to handle login
-        function handleLogin(event) {
-            event.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
+    // Fetch journey data
+    fetch(journeyCsvPath)
+        .then(response => response.json())
+        .then(data => {
+            journeys = JSON.parse(data);
+        })
+        .catch(error => console.error('Error fetching journey data:', error));
+}
 
-            // Check if the provided username and password match any user in the array
-            const user = users.find(user => user.username === username && user.password === password);
+// Function to parse CSV data
+function parseCSV(data) {
+    const lines = data.split('\n');
+    return lines.slice(1).map(line => line.split(',').map(value => value.trim()));
+}
 
-            if (user) {
-                isLoggedIn = true;
-                document.getElementById('loginForm').style.display = 'none';
-                document.getElementById('registerForm').style.display = 'none';
-                enableTabs();
-                showUserProfile(user);
-                populateJourneys();
-            } else {
-                alert('Invalid username or password');
-            }
-        }
+// Function to handle login
+function handleLogin(event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
 
-        // Function to show user profile
-        function showUserProfile(user) {
-            document.getElementById('profileUserId').innerText = user.userId;
-            document.getElementById('profileUserName').innerText = user.username;
-            document.getElementById('profileVehicleId').innerText = user.vehicleId;
-            document.getElementById('profileVehicleType').innerText = user.vehicleType;
-            document.getElementById('profileGpsId').innerText = user.gpsId;
-            document.getElementById('userProfile').style.display = 'block';
-        }
+    // Check if the provided username and password match any user in the array
+    const user = users.find(user => user.username === username && user.password === password);
 
-        // Function to enable tabs
-        function enableTabs() {
-            document.getElementById('statusTab').classList.remove('disabled');
-            document.getElementById('aboutusTab').classList.remove('disabled');
-        }
+    if (user) {
+        isLoggedIn = true;
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('registerForm').style.display = 'none';
+        enableTabs();
+        showUserProfile(user);
+        populateJourneys(user.vehicleId);
+    } else {
+        alert('Invalid username or password');
+    }
+}
 
-        // Function to populate journey details
-        function populateJourneys() {
-            const journeys = [
-                { distance: 100, fees: 10 },
-                { distance: 200, fees: 20 },
-                { distance: 150, fees: 15 },
-                { distance: 250, fees: 25 },
-                { distance: 300, fees: 30 }
-            ];
+// Function to show user profile
+function showUserProfile(user) {
+    document.getElementById('profileUserName').innerText = user.username;
+    document.getElementById('profileUserId').innerText = user.userId;
+    document.getElementById('profileVehicleId').innerText = user.vehicleId;
+    document.getElementById('profileVehicleType').innerText = user.vehicleType;
+    document.getElementById('profileGpsId').innerText = user.gpsId;
+    document.getElementById('userProfile').style.display = 'block';
+}
 
-            for (let i = 0; i < journeys.length; i++) {
-                document.getElementById('j' + (i+1) + '-distance').innerText = journeys[i].distance + ' km';
-                document.getElementById('j' + (i+1) + '-fees').innerText = '$' + journeys[i].fees;
-            }
-        }
+// Function to enable the Status tab
+function enableTabs() {
+    document.getElementById('statusTab').classList.remove('disabled');
+}
 
-        // Event listeners
+// Function to populate journey details
+function populateJourneys(vehicleId) {
+    const userJourneys = journeys.filter(journey => journey.vehicle_id === vehicleId);
+    let totalDistance = 0;
+    let totalFees = 0;
 
-        // Login form submission
-        document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
+    for (let i = 0; i < userJourneys.length; i++) {
+        document.getElementById('j' + (i+1) + '-distance').innerText = userJourneys[i].distance + ' km';
+        document.getElementById('j' + (i+1) + '-fees').innerText = '$' + userJourneys[i].fees;
+        totalDistance += userJourneys[i].distance;
+        totalFees += userJourneys[i].fees;
+    }
 
-        // Toggle between login and registration forms
-        document.getElementById('loginTab').addEventListener('click', function() {
-            var loginForm = document.getElementById('loginForm');
-            var registerForm = document.getElementById('registerForm');
+    document.getElementById('totalDistance').innerText = totalDistance + ' km';
+    document.getElementById('totalToll').innerText = '$' + totalFees;
+}
 
-            if (loginForm.style.display === 'none') {
-                loginForm.style.display = 'block';
-                registerForm.style.display = 'none';
-            } else {
-                loginForm.style.display = 'none';
-            }
-        });
+// Toggle between login and registration forms
+document.getElementById('loginTab').addEventListener('click', function() {
+    var loginForm = document.getElementById('loginForm');
+    var registerForm = document.getElementById('registerForm');
 
-        // Show registration form
-        document.getElementById('registerLink').addEventListener('click', function(event) {
-            event.preventDefault();
-            var loginForm = document.getElementById('loginForm');
-            var registerForm = document.getElementById('registerForm');
+    if (loginForm.style.display === 'none') {
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+    } else {
+        loginForm.style.display = 'none';
+    }
+});
 
-            if (registerForm.style.display === 'none') {
-                registerForm.style.display = 'block';
-                loginForm.style.display = 'none';
-            } else {
-                registerForm.style.display = 'none';
-            }
-        });
+// Show registration form
+document.getElementById('registerLink').addEventListener('click', function(event) {
+    event.preventDefault();
+    var loginForm = document.getElementById('loginForm');
+    var registerForm = document.getElementById('registerForm');
 
-        // Prevent access to status tab if not logged in
-        document.getElementById('statusTab').addEventListener('click', function(event) {
-            event.preventDefault();
-            
-            if (!isLoggedIn) {
-                alert('Please log in to access this page.');
-                return;
-            }
-            
-            const statusContent = document.getElementById('statusContent');
-            const gpsInterface = document.getElementById('gpsInterface');
+    if (registerForm.style.display === 'none') {
+        registerForm.style.display = 'block';
+        loginForm.style.display = 'none';
+    } else {
+        registerForm.style.display = 'none';
+    }
+});
 
-            if (statusContent.style.display === 'none') {
-                statusContent.style.display = 'block';
-                gpsInterface.style.display = 'none'; // Hide GPS interface if shown
-            } else {
-                statusContent.style.display = 'none';
-            }
-        });
+// Prevent access to status tab if not logged in
+document.getElementById('statusTab').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    if (!isLoggedIn) {
+        alert('Please log in to access this page.');
+        return;
+    }
+    
+    const statusContent = document.getElementById('statusContent');
+    const gpsInterface = document.getElementById('gpsInterface');
 
-        // Load users on page load
-        document.addEventListener('DOMContentLoaded', loadUsers);
+    if (statusContent.style.display === 'none') {
+        statusContent.style.display = 'block';
+        gpsInterface.style.display = 'none'; // Hide GPS interface if shown
+    } else {
+        statusContent.style.display = 'none';
+    }
+});
+
+// Fetch data from backend on button click
+document.getElementById('fetchDataBtn').addEventListener('click', function() {
+    fetchDataFromBackend();
+});
+
+// Handle login form submission
+document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
