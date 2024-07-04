@@ -10,7 +10,7 @@ app = Flask(__name__)
 model = joblib.load('flaskapp/lgbm_model4.sav')
 
 # Directory containing the CSV files
-directory_path = r'/path/to/your/csv_directory'  # Replace with your actual directory path
+directory_path = r'user'  # Replace with your actual directory path
 
 @app.route('/')
 def home():
