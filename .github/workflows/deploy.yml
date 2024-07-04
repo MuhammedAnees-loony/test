@@ -25,7 +25,7 @@ jobs:
 
     - name: Load model
       run: |
-        wget -O flaskapp/lgbmmodel4.sav 
+        wget -O https://github.com/MuhammedAnees-loony/test/blob/main/flaskapp/lgbm_model4.sav 
         # or use a secure method to load your model
 
     - name: Deploy to AWS Elastic Beanstalk
