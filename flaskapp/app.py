@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import os
 
-app = Flask(name)
+app = Flask(__name__)
 
 # Load the model
 model = joblib.load('flaskapp/lgbm_model4.sav')
