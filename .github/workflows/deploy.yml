@@ -1,0 +1,44 @@
+name: Deploy Flask Application
+
+on:
+  push:
+    branches:
+      - main  # Trigger the workflow on push to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'  # Adjust Python version as needed
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Load model
+      run: |
+        wget -O flaskapp/lgbmmodel4.sav https://example.com/path/to/lgbmmodel4.sav  # Replace with your model download link
+        # or use a secure method to load your model
+
+    - name: Deploy to AWS Elastic Beanstalk
+      env:
+        BACKEND_URL: ${{ secrets.BACKEND_URL }}  # Ensure you add this secret in your GitHub repository settings
+      run: |
+        eb init -p python-3.8 your-app-name  # Initialize Elastic Beanstalk application
+        eb deploy --staged  # Deploy to Elastic Beanstalk
+
+    - name: Run tests  # Optional: Add testing steps if needed
+      run: |
+        pytest
+
+    - name: Cleanup
+      run: |
+        rm -f flaskapp/lgbmmodel4.sav  # Remove model file after deployment
