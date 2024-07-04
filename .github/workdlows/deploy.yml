@@ -3,12 +3,12 @@ name: Deploy Flask Application
 on:
   push:
     branches:
-      - main  # Trigger the workflow on push to main branch
+      - main  # Trigger the workflow on push to the main branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
@@ -29,6 +29,8 @@ jobs:
         # or use a secure method to load your model
 
     - name: Deploy to AWS Elastic Beanstalk
+      env:
+        BACKEND_URL: ${{ secrets.BACKEND_URL }}  # Ensure you add this secret in your GitHub repository settings
       run: |
         eb init -p python-3.8 your-app-name  # Initialize Elastic Beanstalk application
         eb deploy --staged  # Deploy to Elastic Beanstalk
