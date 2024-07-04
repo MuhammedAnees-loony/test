@@ -1,4 +1,31 @@
 let isLoggedIn = false;
+let users = [];
+
+// Function to load users from CSV
+async function loadUsers() {
+    const response = await fetch('C:\Users\VICTUS\Downloads\intel project\details.csv');
+    const data = await response.text();
+    parseCSV(data);
+}
+
+// Function to parse CSV data
+function parseCSV(data) {
+    const lines = data.split('\n');
+    for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line) {
+            const [username, password, userId, vehicleId, vehicleType, gpsId] = line.split(',');
+            users.push({
+                username: username.trim(),
+                password: password.trim(),
+                userId: userId.trim(),
+                vehicleId: vehicleId.trim(),
+                vehicleType: vehicleType.trim(),
+                gpsId: gpsId.trim()
+            });
+        }
+    }
+}
 
 // Function to handle login
 function handleLogin(event) {
@@ -6,34 +33,32 @@ function handleLogin(event) {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    const validUsername = 'Navya Prasad';
-    const validPassword = 'codeclan';
+    // Check if the provided username and password match any user in the array
+    const user = users.find(user => user.username === username && user.password === password);
 
-    if (username === validUsername && password === validPassword) {
+    if (user) {
         isLoggedIn = true;
         document.getElementById('loginForm').style.display = 'none';
         document.getElementById('registerForm').style.display = 'none';
         enableTabs();
-        showUserProfile();
+        showUserProfile(user);
     } else {
         alert('Invalid username or password');
     }
 }
-		
 
 // Function to show user profile
-function showUserProfile() {
-    document.getElementById('profileUserId').innerText = 'CC-001';
-    document.getElementById('profileUserName').innerText = 'Navya Prasad';
-    document.getElementById('profileVehicleId').innerText = 'V001';
-    document.getElementById('profileVehicleType').innerText = 'Sedan';
-    document.getElementById('profileGpsId').innerText = 'G001';
+function showUserProfile(user) {
+    document.getElementById('profileUserId').innerText = user.userId;
+    document.getElementById('profileUserName').innerText = user.username;
+    document.getElementById('profileVehicleId').innerText = user.vehicleId;
+    document.getElementById('profileVehicleType').innerText = user.vehicleType;
+    document.getElementById('profileGpsId').innerText = user.gpsId;
     document.getElementById('userProfile').style.display = 'block';
 }
 
 // Function to enable tabs
 function enableTabs() {
-    document.getElementById('homeTab').classList.remove('disabled');
     document.getElementById('statusTab').classList.remove('disabled');
     document.getElementById('aboutusTab').classList.remove('disabled');
 }
@@ -90,4 +115,5 @@ document.getElementById('statusTab').addEventListener('click', function(event) {
     }
 });
 
-
+// Load users on page load
+document.addEventListener('DOMContentLoaded', loadUsers);
