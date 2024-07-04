@@ -1,10 +1,10 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file
 import joblib
 import numpy as np
 import pandas as pd
 import os
 
-app = Flask(__name__)
+app = Flask(name)
 
 # Load the model
 model = joblib.load('flaskapp/lgbm_model4.sav')
@@ -49,5 +49,29 @@ def predict():
 
     return jsonify({'success': 'Predictions made and files updated successfully'}), 200
 
-if __name__ == '__main__':
+@app.route('/users', methods=['GET'])
+def get_users():
+    # Path to the user CSV file
+    user_csv_path = os.path.join(directory_path, 'users.csv')
+    if not os.path.exists(user_csv_path):
+        return jsonify({'error': 'User CSV file does not exist'}), 400
+
+    # Read the user CSV file
+    user_data = pd.read_csv(user_csv_path)
+    user_json = user_data.to_json(orient='records')
+    return jsonify(user_json), 200
+
+@app.route('/journeys', methods=['GET'])
+def get_journeys():
+    # Path to the journey CSV file
+    journey_csv_path = os.path.join(directory_path, 'journeys.csv')
+    if not os.path.exists(journey_csv_path):
+        return jsonify({'error': 'Journey CSV file does not exist'}), 400
+
+    # Read the journey CSV file
+    journey_data = pd.read_csv(journey_csv_path)
+    journey_json = journey_data.to_json(orient='records')
+    return jsonify(journey_json), 200
+
+if name == 'main':
     app.run(debug=True)
