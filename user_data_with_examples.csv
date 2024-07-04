@@ -1,0 +1,6 @@
+User_id,User_Name,Password,vehicle_id,gps_id,Id_proof
+CC-001,Alice,pass123,V001,G001,ID001
+CC-002,Bob,qwerty,V002,G002,ID002
+CC-003,Charlie,123456,V003,G003,ID003
+CC-004,David,password,V004,G004,ID004
+CC-005,Eve,abc123,V005,G005,ID005
