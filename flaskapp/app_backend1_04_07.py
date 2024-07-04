@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 
 # Load the model
-model = joblib.load('/path/to/your/lgbm_model4.sav')
+model = joblib.load('flaskapp/lgbm_model4.sav')
 
 # Directory containing the CSV files
 directory_path = r'/path/to/your/csv_directory'  # Replace with your actual directory path
