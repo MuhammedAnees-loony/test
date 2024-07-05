@@ -66,6 +66,19 @@
                     </form>
                 </div>
 
+                <div id="statusContent" style="display: none;">
+                    <h2>Journey Status</h2>
+                    <p>Total Distance: <span id="totalDistance">0 km</span></p>
+                    <p>Total Toll: <span id="totalToll">$0</span></p>
+                    <div id="journeyDetails">
+                        <div>Journey 1: Distance: <span id="j1-distance"></span>, Fees: <span id="j1-fees"></span></div>
+                        <div>Journey 2: Distance: <span id="j2-distance"></span>, Fees: <span id="j2-fees"></span></div>
+                        <div>Journey 3: Distance: <span id="j3-distance"></span>, Fees: <span id="j3-fees"></span></div>
+                        <div>Journey 4: Distance: <span id="j4-distance"></span>, Fees: <span id="j4-fees"></span></div>
+                        <div>Journey 5: Distance: <span id="j5-distance"></span>, Fees: <span id="j5-fees"></span></div>
+                    </div>
+                </div>
+
                 <!-- GPS Toll Collection Interface -->
                 <div id="gpsInterface" style="display: none;">
                     <h2>GPS Toll-Based Collection Interface</h2>
@@ -122,6 +135,9 @@
                 </div>
             </div>
         </div>
+        <footer>
+            <p>&copy; 2024 GPS Based Toll Collection System. All rights reserved.</p>
+        </footer>
     </div>
-
+    <button id="fetchDataBtn">Fetch Data</button>
     <script src="interface.js"></script>
