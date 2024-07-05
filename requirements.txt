@@ -4,3 +4,4 @@ pandas
 numpy
 lightgbm
 gunicorn
+Flask-CORS
