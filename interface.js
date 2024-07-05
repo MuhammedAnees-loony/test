@@ -2,18 +2,9 @@ let isLoggedIn = false;
 let users = [];
 let journeys = [];
 
-// Function to fetch user and journey data from backend
-function fetchDataFromBackend() {
-    const userCsvPath = 'https://raw.githubusercontent.com/MuhammedAnees-loony/test/main/login.csv';  // Backend endpoint to fetch user data
+// Function to fetch journey data from backend
+function fetchJourneyData() {
     const journeyCsvPath = 'http://127.0.0.1:5000/journeys';  // Backend endpoint to fetch journey data
-
-    // Fetch user data
-    fetch(userCsvPath)
-        .then(response => response.json())
-        .then(data => {
-            users = JSON.parse(data);
-        })
-        .catch(error => console.error('Error fetching user data:', error));
 
     // Fetch journey data
     fetch(journeyCsvPath)
@@ -24,6 +15,37 @@ function fetchDataFromBackend() {
         .catch(error => console.error('Error fetching journey data:', error));
 }
 
+// Function to fetch login data from CSV file in GitHub repository
+function fetchLoginData() {
+    const loginCsvPath = 'https://raw.githubusercontent.com/yourusername/yourrepository/main/login.csv';  // Replace with your GitHub raw CSV file URL
+
+    // Fetch login data using Fetch API
+    fetch(loginCsvPath)
+        .then(response => response.text())
+        .then(data => {
+            users = parseCsvData(data);
+        })
+        .catch(error => console.error('Error fetching login data:', error));
+}
+
+// Function to parse CSV data
+function parseCsvData(csvData) {
+    const lines = csvData.split('\n');
+    const headers = lines[0].split(',');
+    const result = [];
+
+    for (let i = 1; i < lines.length; i++) {
+        const obj = {};
+        const currentline = lines[i].split(',');
+
+        for (let j = 0; j < headers.length; j++) {
+            obj[headers[j].trim()] = currentline[j].trim();
+        }
+
+        result.push(obj);
+    }
+    return result;
+}
 
 // Function to handle login
 function handleLogin(event) {
@@ -40,7 +62,8 @@ function handleLogin(event) {
         document.getElementById('registerForm').style.display = 'none';
         enableTabs();
         showUserProfile(user);
-        populateJourneys(user.vehicleId);
+        sendVehicleIdForPrediction(user.vehicleId); // Send vehicle ID for prediction
+        fetchJourneyDetails(user.vehicleId); // Fetch journey details
     } else {
         alert('Invalid username or password');
     }
@@ -61,6 +84,17 @@ function enableTabs() {
     document.getElementById('statusTab').classList.remove('disabled');
 }
 
+// Function to fetch journey details from the backend
+function fetchJourneyDetails(vehicleId) {
+    fetch(`http://127.0.0.1:5000/journeys/${vehicleId}`)
+        .then(response => response.json())
+        .then(data => {
+            journeys = data;
+            populateJourneys(vehicleId);
+        })
+        .catch(error => console.error('Error fetching journey details:', error));
+}
+
 // Function to populate journey details
 function populateJourneys(vehicleId) {
     const userJourneys = journeys.filter(journey => journey.vehicle_id === vehicleId);
@@ -68,10 +102,10 @@ function populateJourneys(vehicleId) {
     let totalFees = 0;
 
     for (let i = 0; i < userJourneys.length; i++) {
-        document.getElementById('j' + (i+1) + '-distance').innerText = userJourneys[i].distance + ' km';
-        document.getElementById('j' + (i+1) + '-fees').innerText = '$' + userJourneys[i].fees;
-        totalDistance += userJourneys[i].distance;
-        totalFees += userJourneys[i].fees;
+        document.getElementById('j' + (i + 1) + '-distance').innerText = userJourneys[i].distance + ' km';
+        document.getElementById('j' + (i + 1) + '-fees').innerText = '$' + userJourneys[i].fees;
+        totalDistance += parseFloat(userJourneys[i].distance);
+        totalFees += parseFloat(userJourneys[i].fees);
     }
 
     document.getElementById('totalDistance').innerText = totalDistance + ' km';
@@ -79,7 +113,7 @@ function populateJourneys(vehicleId) {
 }
 
 // Toggle between login and registration forms
-document.getElementById('loginTab').addEventListener('click', function() {
+document.getElementById('loginTab').addEventListener('click', function () {
     var loginForm = document.getElementById('loginForm');
     var registerForm = document.getElementById('registerForm');
 
@@ -92,7 +126,7 @@ document.getElementById('loginTab').addEventListener('click', function() {
 });
 
 // Show registration form
-document.getElementById('registerLink').addEventListener('click', function(event) {
+document.getElementById('registerLink').addEventListener('click', function (event) {
     event.preventDefault();
     var loginForm = document.getElementById('loginForm');
     var registerForm = document.getElementById('registerForm');
@@ -106,14 +140,14 @@ document.getElementById('registerLink').addEventListener('click', function(event
 });
 
 // Prevent access to status tab if not logged in
-document.getElementById('statusTab').addEventListener('click', function(event) {
+document.getElementById('statusTab').addEventListener('click', function (event) {
     event.preventDefault();
-    
+
     if (!isLoggedIn) {
         alert('Please log in to access this page.');
         return;
     }
-    
+
     const statusContent = document.getElementById('statusContent');
     const gpsInterface = document.getElementById('gpsInterface');
 
@@ -124,6 +158,7 @@ document.getElementById('statusTab').addEventListener('click', function(event) {
         statusContent.style.display = 'none';
     }
 });
+
 // Function to send vehicle ID for prediction
 function sendVehicleIdForPrediction(vehicleId) {
     axios.post('http://127.0.0.1:5000/predict', { vehicle_id: vehicleId })
@@ -137,8 +172,9 @@ function sendVehicleIdForPrediction(vehicleId) {
 }
 
 // Fetch data from backend on button click
-document.getElementById('fetchDataBtn').addEventListener('click', function() {
-    fetchDataFromBackend();
+document.getElementById('fetchDataBtn').addEventListener('click', function () {
+    fetchLoginData(); // Fetch login data
+    fetchJourneyData(); // Fetch journey data
 });
 
 // Handle login form submission
