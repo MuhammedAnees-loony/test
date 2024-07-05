@@ -24,11 +24,6 @@ function fetchDataFromBackend() {
         .catch(error => console.error('Error fetching journey data:', error));
 }
 
-// Function to parse CSV data
-function parseCSV(data) {
-    const lines = data.split('\n');
-    return lines.slice(1).map(line => line.split(',').map(value => value.trim()));
-}
 
 // Function to handle login
 function handleLogin(event) {
@@ -129,6 +124,17 @@ document.getElementById('statusTab').addEventListener('click', function(event) {
         statusContent.style.display = 'none';
     }
 });
+// Function to send vehicle ID for prediction
+function sendVehicleIdForPrediction(vehicleId) {
+    axios.post('http://127.0.0.1:5000/predict', { vehicle_id: vehicleId })
+        .then(response => {
+            console.log('Prediction Response:', response.data);
+            // Handle the prediction response if needed
+        })
+        .catch(error => {
+            console.error('Error sending vehicle ID for prediction:', error);
+        });
+}
 
 // Fetch data from backend on button click
 document.getElementById('fetchDataBtn').addEventListener('click', function() {
