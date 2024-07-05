@@ -57,7 +57,7 @@ function handleLogin(event) {
 
 // Function to fetch journey data from the backend
 function fetchJourneyData(vehicleId) {
-    const journeyApiUrl = 'http://127.0.0.1:5000/journeys';  // Backend URL for journey data
+    const journeyApiUrl = 'http://0.0.0.0:5000/journeys';  // Backend URL for journey data
 
     fetch(journeyApiUrl)
         .then(response => response.json())
