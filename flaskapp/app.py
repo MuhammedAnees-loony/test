@@ -73,5 +73,5 @@ def get_journeys():
     journey_json = journey_data.to_json(orient='records')
     return jsonify(journey_json), 200
 
-if name == 'main':
+if name == '__main__':
     app.run(debug=True)
