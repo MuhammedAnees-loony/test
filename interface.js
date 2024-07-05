@@ -57,13 +57,19 @@ function handleLogin(event) {
 
 // Function to fetch journey data from the backend
 function fetchJourneyData(vehicleId) {
-    const journeyApiUrl = 'http://0.0.0.0:5000/journeys';  // Backend URL for journey data
+    const journeyApiUrl = 'https://muhammedanees-loony.github.io/flaskapp/predict';  // Update with your Flask backend URL
 
-    fetch(journeyApiUrl)
+    fetch(journeyApiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ vehicleId: vehicleId })
+    })
         .then(response => response.json())
         .then(data => {
-            journeys = JSON.parse(data);
-            console.log('Journey data fetched:', journeys);  // Log the fetched journey data for debugging
+            console.log('Journey data fetched:', data);  // Log the fetched journey data for debugging
+            journeys = data;
             populateJourneys(vehicleId);
         })
         .catch(error => console.error('Error fetching journey data:', error));
@@ -92,9 +98,9 @@ function populateJourneys(vehicleId) {
 
     for (let i = 0; i < userJourneys.length; i++) {
         document.getElementById('j' + (i+1) + '-distance').innerText = userJourneys[i].distance + ' km';
-        document.getElementById('j' + (i+1) + '-fees').innerText = '$' + userJourneys[i].fees;
+        document.getElementById('j' + (i+1) + '-fees').innerText = '$' + userJourneys[i].fee;
         totalDistance += userJourneys[i].distance;
-        totalFees += userJourneys[i].fees;
+        totalFees += userJourneys[i].fee;
     }
 
     document.getElementById('totalDistance').innerText = totalDistance + ' km';
