@@ -17,7 +17,7 @@ function fetchJourneyData() {
 
 // Function to fetch login data from CSV file in GitHub repository
 function fetchLoginData() {
-    const loginCsvPath = 'https://raw.githubusercontent.com/yourusername/yourrepository/main/login.csv';  // Replace with your GitHub raw CSV file URL
+    const loginCsvPath = 'https://raw.githubusercontent.com/MuhammedAnees-loony/test/main/login.csv';  // Replace with your GitHub raw CSV file URL
 
     // Fetch login data using Fetch API
     fetch(loginCsvPath)
