@@ -49,7 +49,7 @@ function handleLogin(event) {
         document.getElementById('registerForm').style.display = 'none';
         enableTabs();
         showUserProfile(user);
-        fetchJourneyData(user.vehicle_id);  // Fetch journeys after successful login
+        fetchJourneyData(user.vehicleId);  // Fetch journeys after successful login
     } else {
         alert('Invalid username or password');
     }
@@ -57,19 +57,13 @@ function handleLogin(event) {
 
 // Function to fetch journey data from the backend
 function fetchJourneyData(vehicleId) {
-    const journeyApiUrl = 'http://127.0.0.1:5000/predict';  // Update with your Flask backend URL and endpoint
+    const journeyApiUrl = 'http://0.0.0.0:5000/journeys';  // Backend URL for journey data
 
-    fetch(journeyApiUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ vehicle_id: vehicleId })  // Ensure this matches your backend's expected JSON structure
-    })
+    fetch(journeyApiUrl)
         .then(response => response.json())
         .then(data => {
-            console.log('Journey data fetched:', data);  // Log the fetched journey data for debugging
-            journeys = data;
+            journeys = JSON.parse(data);
+            console.log('Journey data fetched:', journeys);  // Log the fetched journey data for debugging
             populateJourneys(vehicleId);
         })
         .catch(error => console.error('Error fetching journey data:', error));
@@ -79,9 +73,9 @@ function fetchJourneyData(vehicleId) {
 function showUserProfile(user) {
     document.getElementById('profileUserName').innerText = user.username;
     document.getElementById('profileUserId').innerText = user.userId;
-    document.getElementById('profileVehicleId').innerText = user.vehicle_id;
-    document.getElementById('profileVehicleType').innerText = user.vehicle_type;
-    document.getElementById('profileGpsId').innerText = user.gps_id;
+    document.getElementById('profileVehicleId').innerText = user.vehicleId;
+    document.getElementById('profileVehicleType').innerText = user.vehicleType;
+    document.getElementById('profileGpsId').innerText = user.gpsId;
     document.getElementById('userProfile').style.display = 'block';
 }
 
@@ -98,13 +92,13 @@ function populateJourneys(vehicleId) {
 
     for (let i = 0; i < userJourneys.length; i++) {
         document.getElementById('j' + (i+1) + '-distance').innerText = userJourneys[i].distance + ' km';
-        document.getElementById('j' + (i+1) + '-fees').innerText = '$' + userJourneys[i].fee.toFixed(2);
+        document.getElementById('j' + (i+1) + '-fees').innerText = '$' + userJourneys[i].fees;
         totalDistance += userJourneys[i].distance;
-        totalFees += userJourneys[i].fee;
+        totalFees += userJourneys[i].fees;
     }
 
     document.getElementById('totalDistance').innerText = totalDistance + ' km';
-    document.getElementById('totalToll').innerText = '$' + totalFees.toFixed(2);
+    document.getElementById('totalToll').innerText = '$' + totalFees;
 }
 
 // Toggle between login and registration forms
@@ -158,4 +152,4 @@ document.getElementById('statusTab').addEventListener('click', function(event) {
 window.onload = fetchUserData;
 
 // Handle login form submission
-document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
+document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
