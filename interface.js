@@ -4,7 +4,7 @@ let journeys = [];
 
 // Function to fetch user and journey data from backend
 function fetchDataFromBackend() {
-    const userCsvPath = 'http://127.0.0.1:5000/users';  // Backend endpoint to fetch user data
+    const userCsvPath = 'https://raw.githubusercontent.com/MuhammedAnees-loony/test/main/login.csv';  // Backend endpoint to fetch user data
     const journeyCsvPath = 'http://127.0.0.1:5000/journeys';  // Backend endpoint to fetch journey data
 
     // Fetch user data
