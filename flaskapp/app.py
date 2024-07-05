@@ -1,10 +1,12 @@
 from flask import Flask, request, jsonify, send_file
+from flask_cors import CORS  # Import CORS from flask_cors
 import joblib
 import numpy as np
 import pandas as pd
 import os
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "https://muhammedanees-loony.github.io"}})  # Allow CORS for specific domain
 
 # Load the model
 model = joblib.load('flaskapp/lgbm_model4.sav')
