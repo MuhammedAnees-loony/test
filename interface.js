@@ -49,7 +49,7 @@ function handleLogin(event) {
         document.getElementById('registerForm').style.display = 'none';
         enableTabs();
         showUserProfile(user);
-        fetchJourneyData(user.vehicleId);  // Fetch journeys after successful login
+        fetchJourneyData(user.vehicle_id);  // Fetch journeys after successful login
     } else {
         alert('Invalid username or password');
     }
@@ -79,9 +79,9 @@ function fetchJourneyData(vehicleId) {
 function showUserProfile(user) {
     document.getElementById('profileUserName').innerText = user.username;
     document.getElementById('profileUserId').innerText = user.userId;
-    document.getElementById('profileVehicleId').innerText = user.vehicleId;
-    document.getElementById('profileVehicleType').innerText = user.vehicleType;
-    document.getElementById('profileGpsId').innerText = user.gpsId;
+    document.getElementById('profileVehicleId').innerText = user.vehicle_id;
+    document.getElementById('profileVehicleType').innerText = user.vehicle_type;
+    document.getElementById('profileGpsId').innerText = user.gps_id;
     document.getElementById('userProfile').style.display = 'block';
 }
 
