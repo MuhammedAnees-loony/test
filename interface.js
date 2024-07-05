@@ -2,48 +2,44 @@ let isLoggedIn = false;
 let users = [];
 let journeys = [];
 
-// Function to fetch journey data from backend
-function fetchJourneyData() {
-    const journeyCsvPath = 'http://127.0.0.1:5000/journeys';  // Backend endpoint to fetch journey data
+// Function to fetch user and journey data from backend
+function fetchDataFromBackend() {
+    const userCsvPath = 'https://raw.githubusercontent.com/MuhammedAnees-loony/test/main/login.csv';  // GitHub URL for user data
+    const journeyCsvPath = 'http://0.0.0.0:5000/journeys';  // Backend endpoint to fetch journey data
+
+    // Fetch and parse user data from CSV
+    fetch(userCsvPath)
+        .then(response => response.text())
+        .then(data => {
+            users = parseCSV(data);
+        })
+        .catch(error => console.error('Error fetching user data:', error));
 
     // Fetch journey data
     fetch(journeyCsvPath)
         .then(response => response.json())
         .then(data => {
-            journeys = JSON.parse(data);
+            journeys = data; // No need to parse JSON data
         })
         .catch(error => console.error('Error fetching journey data:', error));
 }
 
-// Function to fetch login data from CSV file in GitHub repository
-function fetchLoginData() {
-    const loginCsvPath = 'https://raw.githubusercontent.com/MuhammedAnees-loony/test/main/login.csv';  // Replace with your GitHub raw CSV file URL
-
-    // Fetch login data using Fetch API
-    fetch(loginCsvPath)
-        .then(response => response.text())
-        .then(data => {
-            users = parseCsvData(data);
-        })
-        .catch(error => console.error('Error fetching login data:', error));
-}
-
-// Function to parse CSV data
-function parseCsvData(csvData) {
-    const lines = csvData.split('\n');
+// Function to parse CSV text into JSON
+function parseCSV(data) {
+    const lines = data.split('\n');
     const headers = lines[0].split(',');
     const result = [];
 
     for (let i = 1; i < lines.length; i++) {
         const obj = {};
-        const currentline = lines[i].split(',');
+        const currentLine = lines[i].split(',');
 
         for (let j = 0; j < headers.length; j++) {
-            obj[headers[j].trim()] = currentline[j].trim();
+            obj[headers[j].trim()] = currentLine[j].trim();
         }
-
         result.push(obj);
     }
+
     return result;
 }
 
@@ -62,8 +58,7 @@ function handleLogin(event) {
         document.getElementById('registerForm').style.display = 'none';
         enableTabs();
         showUserProfile(user);
-        sendVehicleIdForPrediction(user.vehicleId); // Send vehicle ID for prediction
-        fetchJourneyDetails(user.vehicleId); // Fetch journey details
+        populateJourneys(user.vehicleId);
     } else {
         alert('Invalid username or password');
     }
@@ -84,17 +79,6 @@ function enableTabs() {
     document.getElementById('statusTab').classList.remove('disabled');
 }
 
-// Function to fetch journey details from the backend
-function fetchJourneyDetails(vehicleId) {
-    fetch(`http://127.0.0.1:5000/journeys/${vehicleId}`)
-        .then(response => response.json())
-        .then(data => {
-            journeys = data;
-            populateJourneys(vehicleId);
-        })
-        .catch(error => console.error('Error fetching journey details:', error));
-}
-
 // Function to populate journey details
 function populateJourneys(vehicleId) {
     const userJourneys = journeys.filter(journey => journey.vehicle_id === vehicleId);
@@ -102,10 +86,10 @@ function populateJourneys(vehicleId) {
     let totalFees = 0;
 
     for (let i = 0; i < userJourneys.length; i++) {
-        document.getElementById('j' + (i + 1) + '-distance').innerText = userJourneys[i].distance + ' km';
-        document.getElementById('j' + (i + 1) + '-fees').innerText = '$' + userJourneys[i].fees;
-        totalDistance += parseFloat(userJourneys[i].distance);
-        totalFees += parseFloat(userJourneys[i].fees);
+        document.getElementById('j' + (i+1) + '-distance').innerText = userJourneys[i].distance + ' km';
+        document.getElementById('j' + (i+1) + '-fees').innerText = '$' + userJourneys[i].fees;
+        totalDistance += userJourneys[i].distance;
+        totalFees += userJourneys[i].fees;
     }
 
     document.getElementById('totalDistance').innerText = totalDistance + ' km';
@@ -113,7 +97,7 @@ function populateJourneys(vehicleId) {
 }
 
 // Toggle between login and registration forms
-document.getElementById('loginTab').addEventListener('click', function () {
+document.getElementById('loginTab').addEventListener('click', function() {
     var loginForm = document.getElementById('loginForm');
     var registerForm = document.getElementById('registerForm');
 
@@ -126,7 +110,7 @@ document.getElementById('loginTab').addEventListener('click', function () {
 });
 
 // Show registration form
-document.getElementById('registerLink').addEventListener('click', function (event) {
+document.getElementById('registerLink').addEventListener('click', function(event) {
     event.preventDefault();
     var loginForm = document.getElementById('loginForm');
     var registerForm = document.getElementById('registerForm');
@@ -140,14 +124,14 @@ document.getElementById('registerLink').addEventListener('click', function (even
 });
 
 // Prevent access to status tab if not logged in
-document.getElementById('statusTab').addEventListener('click', function (event) {
+document.getElementById('statusTab').addEventListener('click', function(event) {
     event.preventDefault();
-
+    
     if (!isLoggedIn) {
         alert('Please log in to access this page.');
         return;
     }
-
+    
     const statusContent = document.getElementById('statusContent');
     const gpsInterface = document.getElementById('gpsInterface');
 
@@ -172,9 +156,8 @@ function sendVehicleIdForPrediction(vehicleId) {
 }
 
 // Fetch data from backend on button click
-document.getElementById('fetchDataBtn').addEventListener('click', function () {
-    fetchLoginData(); // Fetch login data
-    fetchJourneyData(); // Fetch journey data
+document.getElementById('fetchDataBtn').addEventListener('click', function() {
+    fetchDataFromBackend();
 });
 
 // Handle login form submission
