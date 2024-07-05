@@ -57,14 +57,14 @@ function handleLogin(event) {
 
 // Function to fetch journey data from the backend
 function fetchJourneyData(vehicleId) {
-    const journeyApiUrl = 'http://127.0.0.1:5000';  // Update with your Flask backend URL
+    const journeyApiUrl = 'http://127.0.0.1:5000/predict';  // Update with your Flask backend URL and endpoint
 
     fetch(journeyApiUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ vehicleId: vehicleId })
+        body: JSON.stringify({ vehicle_id: vehicleId })  // Ensure this matches your backend's expected JSON structure
     })
         .then(response => response.json())
         .then(data => {
@@ -98,13 +98,13 @@ function populateJourneys(vehicleId) {
 
     for (let i = 0; i < userJourneys.length; i++) {
         document.getElementById('j' + (i+1) + '-distance').innerText = userJourneys[i].distance + ' km';
-        document.getElementById('j' + (i+1) + '-fees').innerText = '$' + userJourneys[i].fee;
+        document.getElementById('j' + (i+1) + '-fees').innerText = '$' + userJourneys[i].fee.toFixed(2);
         totalDistance += userJourneys[i].distance;
         totalFees += userJourneys[i].fee;
     }
 
     document.getElementById('totalDistance').innerText = totalDistance + ' km';
-    document.getElementById('totalToll').innerText = '$' + totalFees;
+    document.getElementById('totalToll').innerText = '$' + totalFees.toFixed(2);
 }
 
 // Toggle between login and registration forms
