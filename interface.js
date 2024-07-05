@@ -57,7 +57,7 @@ function handleLogin(event) {
 
 // Function to fetch journey data from the backend
 function fetchJourneyData(vehicleId) {
-    const journeyApiUrl = 'https://muhammedanees-loony.github.io/flaskapp/app.py';  // Update with your Flask backend URL
+    const journeyApiUrl = ' * Running on http://127.0.0.1:5000';  // Update with your Flask backend URL
 
     fetch(journeyApiUrl, {
         method: 'POST',
