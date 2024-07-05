@@ -25,9 +25,8 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install lightgbm  # Install lightgbm library
 
       - name: Start Flask application
         run: |
           ls  # Verify files in the current directory
-          python flaskapp/app.py  # Adjust path as necessary for your Flask app
+          gunicorn -w 4 -b 0.0.0.0:5000 flaskapp.app:app  # Adjust path as necessary for your Flask app
