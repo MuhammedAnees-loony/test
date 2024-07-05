@@ -2,31 +2,22 @@ let isLoggedIn = false;
 let users = [];
 let journeys = [];
 
-// Function to fetch user and journey data from backend
-function fetchDataFromBackend() {
+// Function to fetch user data from the GitHub repository
+function fetchUserData() {
     const userCsvPath = 'https://raw.githubusercontent.com/MuhammedAnees-loony/test/main/login.csv';  // GitHub URL for user data
-    const journeyCsvPath = 'http://0.0.0.0:5000/journeys';  // Backend endpoint to fetch journey data
 
-    // Fetch and parse user data from CSV
     fetch(userCsvPath)
         .then(response => response.text())
         .then(data => {
             users = parseCSV(data);
+            console.log('User data fetched:', users);  // Log the fetched user data for debugging
         })
         .catch(error => console.error('Error fetching user data:', error));
-
-    // Fetch journey data
-    fetch(journeyCsvPath)
-        .then(response => response.json())
-        .then(data => {
-            journeys = data; // No need to parse JSON data
-        })
-        .catch(error => console.error('Error fetching journey data:', error));
 }
 
 // Function to parse CSV text into JSON
 function parseCSV(data) {
-    const lines = data.split('\n');
+    const lines = data.split('\n').filter(line => line.trim() !== '');
     const headers = lines[0].split(',');
     const result = [];
 
@@ -58,10 +49,24 @@ function handleLogin(event) {
         document.getElementById('registerForm').style.display = 'none';
         enableTabs();
         showUserProfile(user);
-        populateJourneys(user.vehicleId);
+        fetchJourneyData(user.vehicleId);  // Fetch journeys after successful login
     } else {
         alert('Invalid username or password');
     }
+}
+
+// Function to fetch journey data from the backend
+function fetchJourneyData(vehicleId) {
+    const journeyApiUrl = 'http://127.0.0.1:5000/journeys';  // Backend URL for journey data
+
+    fetch(journeyApiUrl)
+        .then(response => response.json())
+        .then(data => {
+            journeys = JSON.parse(data);
+            console.log('Journey data fetched:', journeys);  // Log the fetched journey data for debugging
+            populateJourneys(vehicleId);
+        })
+        .catch(error => console.error('Error fetching journey data:', error));
 }
 
 // Function to show user profile
@@ -143,22 +148,8 @@ document.getElementById('statusTab').addEventListener('click', function(event) {
     }
 });
 
-// Function to send vehicle ID for prediction
-function sendVehicleIdForPrediction(vehicleId) {
-    axios.post('http://127.0.0.1:5000/predict', { vehicle_id: vehicleId })
-        .then(response => {
-            console.log('Prediction Response:', response.data);
-            // Handle the prediction response if needed
-        })
-        .catch(error => {
-            console.error('Error sending vehicle ID for prediction:', error);
-        });
-}
-
-// Fetch data from backend on button click
-document.getElementById('fetchDataBtn').addEventListener('click', function() {
-    fetchDataFromBackend();
-});
+// Fetch user data when the page loads
+window.onload = fetchUserData;
 
 // Handle login form submission
 document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
