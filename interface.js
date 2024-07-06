@@ -1,3 +1,39 @@
+let users = []; // Variable to store parsed CSV data
+let isLoggedIn = false; // Flag to track login status
+let loggedInUser = null; // Variable to store the logged-in user's data
+
+// Function to fetch user data from the GitHub repository
+function fetchUserData() {
+    const userCsvPath = 'https://raw.githubusercontent.com/MuhammedAnees-loony/test/main/login.csv';  // GitHub URL for user data
+
+    fetch(userCsvPath)
+        .then(response => response.text())
+        .then(data => {
+            users = parseCSV(data);
+            console.log('User data fetched:', users);  // Log the fetched user data for debugging
+        })
+        .catch(error => console.error('Error fetching user data:', error));
+}
+
+// Function to parse CSV text into JSON
+function parseCSV(data) {
+    const lines = data.split('\n').filter(line => line.trim() !== '');
+    const headers = lines[0].split(',');
+    const result = [];
+
+    for (let i = 1; i < lines.length; i++) {
+        const obj = {};
+        const currentLine = lines[i].split(',');
+
+        for (let j = 0; j < headers.length; j++) {
+            obj[headers[j].trim()] = currentLine[j].trim();
+        }
+        result.push(obj);
+    }
+
+    return result;
+}
+
 // Function to handle login
 function handleLogin(event) {
     event.preventDefault();
@@ -9,17 +45,17 @@ function handleLogin(event) {
 
     if (user) {
         isLoggedIn = true;
+        loggedInUser = user; // Store the logged-in user's data
         document.getElementById('loginForm').style.display = 'none';
         document.getElementById('registerForm').style.display = 'none';
         enableTabs();
         showUserProfile(user); // Display user profile details
-        fetchJourneyData(user.vehicleId);  // Fetch journeys after successful login
     } else {
         alert('Invalid username or password');
     }
 }
 
-// Function to fetch journey data after successful login
+// Function to fetch journey data
 function fetchJourneyData(vehicleId) {
     const apiUrl = 'http://localhost:5000/predict'; // Replace with your Flask API URL
 
@@ -57,8 +93,9 @@ function enableTabs() {
     document.getElementById('statusTab').classList.remove('disabled');
     document.getElementById('aboutusTab').classList.remove('disabled');
     document.getElementById('statusTab').addEventListener('click', function() {
-        // Handle click on status tab (optionally call fetchJourneyData() here if needed)
-        fetchJourneyData(user.vehicleId); // Replace with actual user object or data structure
+        if (isLoggedIn && loggedInUser) {
+            fetchJourneyData(loggedInUser.vehicleId); // Use the stored user's vehicle ID
+        }
         showStatusContent();
     });
     document.getElementById('aboutusTab').addEventListener('click', showAboutusContent);
