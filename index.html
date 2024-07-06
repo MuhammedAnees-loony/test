@@ -32,14 +32,37 @@
                 </ul>
             </div>
 
-            <!-- User Profile Section (Initially hidden) -->
-            <div id="userProfile" class="user-profile" style="display: none;">
-                <h2>User Profile</h2>
-                <p><strong>User ID:</strong> <span id="profileUserId"></span></p>
-                <p><strong>Username:</strong> <span id="profileUserName"></span></p>
-                <p><strong>Vehicle ID:</strong> <span id="profileVehicleId"></span></p>
-                <p><strong>Vehicle Type:</strong> <span id="profileVehicleType"></span></p>
-                <p><strong>GPS ID:</strong> <span id="profileGpsId"></span></p>
+            <!-- User Profile and Journey Details Section -->
+            <div class="profile-journey">
+                <!-- User Profile Section -->
+                <div id="userProfile" class="user-profile">
+                    <h2>User Profile</h2>
+                    <p><strong>User ID:</strong> <span id="profileUserId"></span></p>
+                    <p><strong>Username:</strong> <span id="profileUserName"></span></p>
+                    <p><strong>Vehicle ID:</strong> <span id="profileVehicleId"></span></p>
+                    <p><strong>Vehicle Type:</strong> <span id="profileVehicleType"></span></p>
+                    <p><strong>GPS ID:</strong> <span id="profileGpsId"></span></p>
+                </div>
+
+                <!-- Status Content -->
+                <div id="statusContent">
+                    <h2>Payment Details</h2>
+                    <p><strong>Total Distance:</strong> <span id="totalDistance"></span></p>
+                    <p><strong>Total Toll:</strong> <span id="totalToll"></span></p>
+                    <h2>Journey Details</h2>
+                    <table id="journeyTable">
+                        <thead>
+                            <tr>
+                                <th>Journey</th>
+                                <th>Distance (km)</th>
+                                <th>Fees ($)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="journeyTableBody">
+                            <!-- Rows will be dynamically added here -->
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <!-- Main Content -->
@@ -76,26 +99,6 @@
                         <label for="vehicleId">Vehicle ID:</label><br>
                         <input type="text" id="vehicleId" name="vehicleId"><br><br>
                     </div>
-                </div>
-
-                <!-- Status Content -->
-                <div id="statusContent" style="display: none;">
-                    <h2>Payment Details</h2>
-                    <p><strong>Total Distance:</strong> <span id="totalDistance"></span></p>
-                    <p><strong>Total Toll:</strong> <span id="totalToll"></span></p>
-                    <h2>Journey Details</h2>
-                    <table id="journeyTable">
-                        <thead>
-                            <tr>
-                                <th>Journey</th>
-                                <th>Distance (km)</th>
-                                <th>Fees ($)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="journeyTableBody">
-                            <!-- Rows will be dynamically added here -->
-                        </tbody>
-                    </table>
                 </div>
             </div>
         </div>
