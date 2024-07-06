@@ -1,4 +1,5 @@
 let users = []; // Variable to store parsed CSV data
+let isLoggedIn = false; // Flag to track login status
 
 // Function to fetch user data from the GitHub repository
 function fetchUserData() {
@@ -32,12 +33,6 @@ function parseCSV(data) {
     return result;
 }
 
-// Function to show status content
-function showStatusContent() {
-    // Replace with your logic to display status content
-    console.log('Showing status content');
-}
-
 // Function to handle login
 function handleLogin(event) {
     event.preventDefault();
@@ -51,9 +46,9 @@ function handleLogin(event) {
         isLoggedIn = true;
         document.getElementById('loginForm').style.display = 'none';
         document.getElementById('registerForm').style.display = 'none';
-        enableTabs(); // Enable tabs after successful login
-        showUserProfile(user); // Show user profile after successful login
-        fetchJourneyData(user.vehicleId); // Fetch journeys after successful login
+        enableTabs();
+        showUserProfile(user); // Display user profile details
+        fetchJourneyData(user.vehicleId);  // Fetch journeys after successful login
     } else {
         alert('Invalid username or password');
     }
@@ -75,12 +70,6 @@ function showUserProfile(user) {
     document.getElementById('profileVehicleType').textContent = user.vehicleType;
     document.getElementById('profileGpsId').textContent = user.gpsId;
     document.getElementById('userProfile').style.display = 'block';
-}
-
-// Function to fetch journey data
-function fetchJourneyData(vehicleId) {
-    // Replace with your logic to fetch journey data based on vehicleId
-    console.log('Fetching journey data for vehicleId:', vehicleId);
 }
 
 // Event listener for login form submission
