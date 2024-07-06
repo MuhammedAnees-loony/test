@@ -66,16 +66,17 @@
                     </form>
                 </div>
 
+                <!-- Status Content -->
                 <div id="statusContent" style="display: none;">
                     <h2>Journey Status</h2>
                     <p>Total Distance: <span id="totalDistance">0 km</span></p>
                     <p>Total Toll: <span id="totalToll">$0</span></p>
                     <div id="journeyDetails">
-                        <div>Journey 1: Distance: <span id="j1-distance"></span>, Fees: <span id="j1-fees"></span></div>
-                        <div>Journey 2: Distance: <span id="j2-distance"></span>, Fees: <span id="j2-fees"></span></div>
-                        <div>Journey 3: Distance: <span id="j3-distance"></span>, Fees: <span id="j3-fees"></span></div>
-                        <div>Journey 4: Distance: <span id="j4-distance"></span>, Fees: <span id="j4-fees"></span></div>
-                        <div>Journey 5: Distance: <span id="j5-distance"></span>, Fees: <span id="j5-fees"></span></div>
+                        <div>Journey 1: Distance: <span id="j1-distance">--</span>, Fees: <span id="j1-fees">--</span></div>
+                        <div>Journey 2: Distance: <span id="j2-distance">--</span>, Fees: <span id="j2-fees">--</span></div>
+                        <div>Journey 3: Distance: <span id="j3-distance">--</span>, Fees: <span id="j3-fees">--</span></div>
+                        <div>Journey 4: Distance: <span id="j4-distance">--</span>, Fees: <span id="j4-fees">--</span></div>
+                        <div>Journey 5: Distance: <span id="j5-distance">--</span>, Fees: <span id="j5-fees">--</span></div>
                     </div>
                 </div>
 
@@ -89,50 +90,6 @@
                         <input type="text" id="vehicleId" name="vehicleId"><br><br>
                     </div>
                 </div>
-
-                <!-- Status Content -->
-                <div id="statusContent" style="display: none;">
-                    <h2>Payment Details</h2>
-                    <p><strong>Total Distance:</strong> <span id="totalDistance"></span></p>
-                    <p><strong>Total Toll:</strong> <span id="totalToll"></span></p>
-                    <h2>Journey Details</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Journey</th>
-                                <th>Distance (km)</th>
-                                <th>Fees ($)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Journey 1</td>
-                                <td id="j1-distance">--</td>
-                                <td id="j1-fees">--</td>
-                            </tr>
-                            <tr>
-                                <td>Journey 2</td>
-                                <td id="j2-distance">--</td>
-                                <td id="j2-fees">--</td>
-                            </tr>
-                            <tr>
-                                <td>Journey 3</td>
-                                <td id="j3-distance">--</td>
-                                <td id="j3-fees">--</td>
-                            </tr>
-                            <tr>
-                                <td>Journey 4</td>
-                                <td id="j4-distance">--</td>
-                                <td id="j4-fees">--</td>
-                            </tr>
-                            <tr>
-                                <td>Journey 5</td>
-                                <td id="j5-distance">--</td>
-                                <td id="j5-fees">--</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </div>
         <footer>
@@ -141,3 +98,5 @@
     </div>
     <button id="fetchDataBtn">Fetch Data</button>
     <script src="interface.js"></script>
+</body>
+</html>
