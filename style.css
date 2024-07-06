@@ -51,13 +51,6 @@ header {
     position: relative;
 }
 
-header img {
-    width: 100%;
-    height: auto;
-    max-height: 300px;
-    object-fit: cover;
-    border-bottom: 5px solid #004080;
-}
 
 header h1 {
     margin: 20px 0 0;
@@ -88,7 +81,7 @@ header p {
     margin-top: 20px;
 }
 
-.user-profile, #statusContent {
+.user-profile, #registerForm, #gpsInterface, #statusContent {
     background: #f9f9f9;
     padding: 20px;
     border: 1px solid #ddd;
@@ -185,7 +178,66 @@ table th {
     background-color: #f4f4f4;
     font-weight: bold;
 }
+#registerForm, #loginForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-top: 20px;
+    max-width: 400px;
+    width: 100%;
+}
 
+#registerFormElem, #loginFormElem {
+    width: 100%;
+}
+#userProfile {
+    display: none;
+    background: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-top: 20px;
+    max-width: 400px;
+    width: 100%;
+}
+
+#userProfile p {
+    margin: 10px 0;
+}
+
+#gpsInterface {
+    background: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-top: 20px;
+    max-width: 400px;
+    width: 100%;
+}
+
+#statusContent {
+    background: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-top: 20px;
+    max-width: 400px;
+    width: 100%;
+}
+
+#statusContent h2 {
+    font-size: 2em; /* Adjusted font size */
+    color: #0056b3;
+    margin-bottom: 10px;
+}
 /* Footer styling */
 footer {
     text-align: center;
