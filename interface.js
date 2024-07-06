@@ -1,38 +1,3 @@
-let users = []; // Variable to store parsed CSV data
-let isLoggedIn = false; // Flag to track login status
-
-// Function to fetch user data from the GitHub repository
-function fetchUserData() {
-    const userCsvPath = 'https://raw.githubusercontent.com/MuhammedAnees-loony/test/main/login.csv';  // GitHub URL for user data
-
-    fetch(userCsvPath)
-        .then(response => response.text())
-        .then(data => {
-            users = parseCSV(data);
-            console.log('User data fetched:', users);  // Log the fetched user data for debugging
-        })
-        .catch(error => console.error('Error fetching user data:', error));
-}
-
-// Function to parse CSV text into JSON
-function parseCSV(data) {
-    const lines = data.split('\n').filter(line => line.trim() !== '');
-    const headers = lines[0].split(',');
-    const result = [];
-
-    for (let i = 1; i < lines.length; i++) {
-        const obj = {};
-        const currentLine = lines[i].split(',');
-
-        for (let j = 0; j < headers.length; j++) {
-            obj[headers[j].trim()] = currentLine[j].trim();
-        }
-        result.push(obj);
-    }
-
-    return result;
-}
-
 // Function to handle login
 function handleLogin(event) {
     event.preventDefault();
@@ -54,12 +19,49 @@ function handleLogin(event) {
     }
 }
 
+// Function to fetch journey data after successful login
+function fetchJourneyData(vehicleId) {
+    const apiUrl = 'http://localhost:5000/predict'; // Replace with your Flask API URL
+
+    // Prepare the request body
+    const requestBody = {
+        vehicle_id: vehicleId
+    };
+
+    // Send POST request to Flask API
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Predictions made and files updated successfully:', data);
+        // Handle successful response as needed
+    })
+    .catch(error => {
+        console.error('Error making POST request to Flask API:', error);
+        // Handle error response or network issues
+    });
+}
+
 // Function to enable tabs after successful login
 function enableTabs() {
     document.getElementById('statusTab').classList.remove('disabled');
     document.getElementById('aboutusTab').classList.remove('disabled');
-    document.getElementById('statusTab').addEventListener('click', showStatusContent);
-    document.getElementById('aboutusTab').addEventListener('click', showAboutusContent); // Add event listener for about us tab
+    document.getElementById('statusTab').addEventListener('click', function() {
+        // Handle click on status tab (optionally call fetchJourneyData() here if needed)
+        fetchJourneyData(user.vehicleId); // Replace with actual user object or data structure
+        showStatusContent();
+    });
+    document.getElementById('aboutusTab').addEventListener('click', showAboutusContent);
 }
 
 // Function to show user profile after successful login
