@@ -61,6 +61,12 @@ function enableTabs() {
     document.getElementById('aboutusTab').addEventListener('click', showAboutusContent);
 }
 
+// Placeholder for showStatusContent function
+function showStatusContent() {
+    // Implement functionality to show status content
+    console.log('Showing status content');
+}
+
 // Function to show user profile after successful login
 function showUserProfile(user) {
     document.getElementById('profileUserId').textContent = user.userId;
