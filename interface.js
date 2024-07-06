@@ -124,7 +124,14 @@ function showAboutusContent() {
     document.getElementById('statusContent').style.display = 'none';
     document.getElementById('gpsInterface').style.display = 'none';
 }
+// Event listener for login form submission
+document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
 
+// Event listener for register form submission (if needed)
+document.getElementById('registerFormElem').addEventListener('submit', function(event) {
+    event.preventDefault();
+    // Handle registration logic if required
+});
 // Function to display journey data
 function displayJourneyData(data) {
     // Parse the CSV data
