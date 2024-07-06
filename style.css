@@ -48,10 +48,19 @@ header {
     padding: 20px 0;
     background-color: #0056b3;
     color: #fff;
+    position: relative;
+}
+
+header img {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: cover;
+    border-bottom: 5px solid #004080;
 }
 
 header h1 {
-    margin: 0;
+    margin: 20px 0 0;
     font-size: 3em;
 }
 
@@ -59,7 +68,7 @@ header p {
     font-size: 1.2em;
     color: #ccc;
     max-width: 600px;
-    margin: 0 auto;
+    margin: 0 auto 20px;
 }
 
 /* Main content styling */
@@ -157,5 +166,5 @@ footer {
     position: fixed;
     bottom: 0;
     left: 0;
-    width: 60%;
+    width: 100%;
 }
