@@ -32,89 +32,32 @@
             </div>
 
             <!-- User Profile and Journey Details Section -->
-            <div class="profile-journey">
-                <!-- User Profile Section -->
-                <div id="userProfile" class="user-profile">
-                    <h2>User Profile</h2>
-                    <p><strong>User ID:</strong> <span id="profileUserId"></span></p>
-                    <p><strong>Username:</strong> <span id="profileUserName"></span></p>
-                    <p><strong>Vehicle ID:</strong> <span id="profileVehicleId"></span></p>
-                    <p><strong>Vehicle Type:</strong> <span id="profileVehicleType"></span></p>
-                    <p><strong>GPS ID:</strong> <span id="profileGpsId"></span></p>
-                </div>
-
-                <!-- Status Content -->
-                <div id="statusContent">
-                    <h2>Payment Details</h2>
-                    <p><strong>Total Distance:</strong> <span id="totalDistance"></span></p>
-                    <p><strong>Total Toll:</strong> <span id="totalToll"></span></p>
-                    <h2>Journey Details</h2>
-                    <table id="journeyTable">
-                        <thead>
-                            <tr>
-                                <th>Journey</th>
-                                <th>Distance (km)</th>
-                                <th>Fees ($)</th>
-                            </tr>
-                        </thead>
-                        <tbody id="journeyTableBody">
-                            <!-- Rows will be dynamically added here -->
-                        </tbody>
-                    </table>
-                </div>
+            <div id="userProfile" class="user-profile" style="display: none;">
+                <h2>User Profile</h2>
+                <p><strong>User ID:</strong> <span id="profileUserId"></span></p>
+                <p><strong>Username:</strong> <span id="profileUserName"></span></p>
+                <p><strong>Vehicle ID:</strong> <span id="profileVehicleId"></span></p>
+                <p><strong>Vehicle Type:</strong> <span id="profileVehicleType"></span></p>
+                <p><strong>GPS ID:</strong> <span id="profileGpsId"></span></p>
             </div>
 
-            <!-- Main Content -->
-            <div class="content">
-                <!-- Login form -->
-                <div id="loginForm">
-                    <form id="loginFormElem" action="#" method="POST">
-                        <label for="username">Username:</label><br>
-                        <input type="text" id="username" name="username" required><br><br>
-                        <label for="password">Password:</label><br>
-                        <input type="password" id="password" name="password" required><br><br>
-                        <input type="submit" value="Login">
-                    </form>
-                    <p>Don't have an account? <a href="#" id="registerLink">Create new account</a></p>
-                </div>
-
-                <!-- Registration form -->
-                <div id="registerForm" style="display: none;">
-                    <form id="registerFormElem" action="#" method="POST">
-                        <label for="newUsername">New Username:</label><br>
-                        <input type="text" id="newUsername" name="newUsername" required><br><br>
-                        <label for="newPassword">New Password:</label><br>
-                        <input type="password" id="newPassword" name="newPassword" required><br><br>
-                        <input type="submit" value="Register">
-                    </form>
-                </div>
-
-                <!-- GPS Toll Collection Interface -->
-                <div id="gpsInterface" style="display: none;">
-                    <h2>GPS Toll-Based Collection Interface</h2>
-                    <div id="profile">
-                        <label for="userName">Username:</label><br>
-                        <input type="text" id="userName" name="userName"><br><br>
-                        <label for="vehicleId">Vehicle ID:</label><br>
-                        <input type="text" id="vehicleId" name="vehicleId"><br><br>
-                    </div>
-                </div>
-                <!-- Status Content -->
-                <div id="statusContent" style="display: none;">
-                    <h2>Payment Details</h2>
-                    <p><strong>Total Distance:</strong> <span id="totalDistance"></span></p>
-                    <p><strong>Total Toll:</strong> <span id="totalToll"></span></p>
-                    <h2>Journey Details</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Journey</th>
-                                <th>Distance (km)</th>
-                                <th>Fees ($)</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
+            <!-- Status Content -->
+            <div id="statusContent" style="display: none;">
+                <h2>Payment Details</h2>
+                <p><strong>Total Distance:</strong> <span id="totalDistance"></span></p>
+                <p><strong>Total Toll:</strong> <span id="totalToll"></span></p>
+                <h2>Journey Details</h2>
+                <table id="journeyTable">
+                    <thead>
+                        <tr>
+                            <th>Journey</th>
+                            <th>Distance (km)</th>
+                            <th>Fees ($)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="journeyTableBody">
+                        <!-- Rows will be dynamically added here -->
+                        <tr>
                                 <td>Journey 1</td>
                                 <td id="j1-distance">--</td>
                                 <td id="j1-fees">--</td>
@@ -139,9 +82,31 @@
                                 <td id="j5-distance">--</td>
                                 <td id="j5-fees">--</td>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Login form -->
+            <div id="loginForm">
+                <form id="loginFormElem" action="#" method="POST">
+                    <label for="username">Username:</label><br>
+                    <input type="text" id="username" name="username" required><br><br>
+                    <label for="password">Password:</label><br>
+                    <input type="password" id="password" name="password" required><br><br>
+                    <input type="submit" value="Login">
+                </form>
+                <p>Don't have an account? <a href="#" id="registerLink">Create new account</a></p>
+            </div>
+
+            <!-- Registration form -->
+            <div id="registerForm" style="display: none;">
+                <form id="registerFormElem" action="#" method="POST">
+                    <label for="newUsername">New Username:</label><br>
+                    <input type="text" id="newUsername" name="newUsername" required><br><br>
+                    <label for="newPassword">New Password:</label><br>
+                    <input type="password" id="newPassword" name="newPassword" required><br><br>
+                    <input type="submit" value="Register">
+                </form>
             </div>
         </div>
         <footer>
