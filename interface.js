@@ -46,7 +46,7 @@ function handleLogin(event) {
         document.getElementById('loginForm').style.display = 'none';
         document.getElementById('registerForm').style.display = 'none';
         enableTabs();
-        showUserProfile(user);
+        showUserProfile(user);  // Show user profile after successful login
         fetchJourneyData(user.vehicleId);  // Fetch journeys after successful login
     } else {
         alert('Invalid username or password');
