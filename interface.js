@@ -76,15 +76,15 @@ function fetchJourneyData(vehicleId) {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        return response.json();
+        // Assuming the backend returns CSV data
+        return response.text();
     })
     .then(data => {
-        console.log('Predictions made and files updated successfully:', data);
-        // Handle successful response as needed
+        console.log('Journey data fetched successfully:', data);
+        displayJourneyData(data);
     })
     .catch(error => {
         console.error('Error making POST request to Flask API:', error);
-        // Handle error response or network issues
     });
 }
 
@@ -123,6 +123,32 @@ function showAboutusContent() {
     document.getElementById('keyFeatures').style.display = 'none';
     document.getElementById('statusContent').style.display = 'none';
     document.getElementById('gpsInterface').style.display = 'none';
+}
+
+// Function to display journey data
+function displayJourneyData(data) {
+    // Parse the CSV data
+    const journeyData = parseCSV(data);
+
+    // Clear any existing rows in the table body
+    const journeyTableBody = document.getElementById('journeyTableBody');
+    journeyTableBody.innerHTML = '';
+
+    // Add new rows to the table
+    journeyData.forEach((journey, index) => {
+        const row = document.createElement('tr');
+        const journeyCell = document.createElement('td');
+        journeyCell.textContent = `Journey ${index + 1}`;
+        row.appendChild(journeyCell);
+
+        for (const cellData of Object.values(journey)) {
+            const cell = document.createElement('td');
+            cell.textContent = cellData;
+            row.appendChild(cell);
+        }
+
+        journeyTableBody.appendChild(row);
+    });
 }
 
 // Event listener for login form submission
