@@ -64,7 +64,7 @@ function enableTabs() {
 
 // Function to show user profile after successful login
 function showUserProfile(user) {
-    document.getElementById('profileUserId').textContent = user.userId;
+    document.getElementById('profileUserId').textContent = user.userid;
     document.getElementById('profileUserName').textContent = user.username;
     document.getElementById('profileVehicleId').textContent = user.vehicleId;
     document.getElementById('profileVehicleType').textContent = user.vehicleType;
