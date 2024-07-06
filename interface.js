@@ -115,14 +115,12 @@ function showUserProfile(user) {
 function showStatusContent() {
     document.getElementById('keyFeatures').style.display = 'none';
     document.getElementById('statusContent').style.display = 'block';
-    document.getElementById('gpsInterface').style.display = 'none';
 }
 
 // Function to show about us content
 function showAboutusContent() {
     document.getElementById('keyFeatures').style.display = 'none';
     document.getElementById('statusContent').style.display = 'none';
-    document.getElementById('gpsInterface').style.display = 'none';
 }
 
 // Function to display journey data
