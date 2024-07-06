@@ -32,6 +32,12 @@ function parseCSV(data) {
     return result;
 }
 
+// Function to show status content
+function showStatusContent() {
+    // Replace with your logic to display status content
+    console.log('Showing status content');
+}
+
 // Function to handle login
 function handleLogin(event) {
     event.preventDefault();
@@ -45,9 +51,9 @@ function handleLogin(event) {
         isLoggedIn = true;
         document.getElementById('loginForm').style.display = 'none';
         document.getElementById('registerForm').style.display = 'none';
-        enableTabs();
-        showUserProfile(user);  // Show user profile after successful login
-        fetchJourneyData(user.vehicleId);  // Fetch journeys after successful login
+        enableTabs(); // Enable tabs after successful login
+        showUserProfile(user); // Show user profile after successful login
+        fetchJourneyData(user.vehicleId); // Fetch journeys after successful login
     } else {
         alert('Invalid username or password');
     }
@@ -59,12 +65,6 @@ function enableTabs() {
     document.getElementById('aboutusTab').classList.remove('disabled');
     document.getElementById('statusTab').addEventListener('click', showStatusContent);
     document.getElementById('aboutusTab').addEventListener('click', showAboutusContent);
-}
-
-// Placeholder for showStatusContent function
-function showStatusContent() {
-    // Implement functionality to show status content
-    console.log('Showing status content');
 }
 
 // Function to show user profile after successful login
