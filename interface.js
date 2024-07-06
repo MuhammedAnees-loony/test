@@ -1,5 +1,4 @@
-let users = []; // Array to store user data
-let isLoggedIn = false;
+let users = [];
 
 // Function to fetch user data from the GitHub repository
 function fetchUserData() {
@@ -43,7 +42,6 @@ function handleLogin(event) {
     const user = users.find(user => user.username === username && user.password === password);
 
     if (user) {
-        isLoggedIn = true;
         document.getElementById('loginForm').style.display = 'none';
         document.getElementById('registerForm').style.display = 'none';
         enableTabs();
@@ -54,33 +52,29 @@ function handleLogin(event) {
     }
 }
 
-// Event listener for login form submission
-document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
-
-// Event listener for registration form submission
-document.getElementById('registerFormElem').addEventListener('submit', async function(event) {
+// Function to handle registration
+function handleRegistration(event) {
     event.preventDefault();
-    const username = document.getElementById('newUsername').value;
-    const password = document.getElementById('newPassword').value;
+    const newUsername = document.getElementById('newUsername').value;
+    const newPassword = document.getElementById('newPassword').value;
 
-    const response = await fetch('http://localhost:5000/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ username, password })
-    });
-
-    const result = await response.json();
-    if (result.success) {
-        alert('Registration successful');
-        // Handle successful registration
+    // Check if the username already exists
+    const existingUser = users.find(user => user.username === newUsername);
+    if (existingUser) {
+        alert('Username already exists');
     } else {
-        alert(result.error);
+        users.push({ username: newUsername, password: newPassword });
+        alert('Registration successful');
+        document.getElementById('registerForm').style.display = 'none';
+        document.getElementById('loginForm').style.display = 'block';
     }
-});
+}
 
-// Function to show user profile
+function enableTabs() {
+    document.getElementById('statusTab').classList.remove('disabled');
+    document.getElementById('aboutusTab').classList.remove('disabled');
+}
+
 function showUserProfile(user) {
     document.getElementById('profileUserId').textContent = user.user_id;
     document.getElementById('profileUserName').textContent = user.username;
@@ -90,35 +84,13 @@ function showUserProfile(user) {
     document.getElementById('userProfile').style.display = 'block';
 }
 
-// Function to enable tabs
-function enableTabs() {
-    const tabs = document.querySelectorAll('nav ul li a');
-    tabs.forEach(tab => {
-        tab.classList.remove('disabled');
-    });
-}
-
-// Function to fetch journey data (assuming this is needed, placeholder function)
-function fetchJourneyData(vehicleId) {
-    // Implement journey data fetching logic here
-    console.log('Fetching journey data for vehicle ID:', vehicleId);
-}
-
-// Fetch user data when the page loads
+// Fetch user data when the script loads
 fetchUserData();
 
-// Event listener for fetch data button
-document.getElementById('fetchDataBtn').addEventListener('click', async function() {
-    const response = await fetch('http://localhost:5000/profile');
-    const result = await response.json();
-    if (result.user_id) {
-        document.getElementById('profileUserId').textContent = result.user_id;
-        document.getElementById('profileUserName').textContent = result.username;
-        document.getElementById('profileVehicleId').textContent = result.vehicle_id;
-        document.getElementById('profileVehicleType').textContent = result.vehicle_type;
-        document.getElementById('profileGpsId').textContent = result.gps_id;
-        document.getElementById('userProfile').style.display = 'block';
-    } else {
-        alert(result.error);
-    }
+// Attach event listeners
+document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
+document.getElementById('registerFormElem').addEventListener('submit', handleRegistration);
+document.getElementById('registerLink').addEventListener('click', function() {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'block';
 });
