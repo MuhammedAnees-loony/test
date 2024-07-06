@@ -59,7 +59,7 @@ function enableTabs() {
     document.getElementById('statusTab').classList.remove('disabled');
     document.getElementById('aboutusTab').classList.remove('disabled');
     document.getElementById('statusTab').addEventListener('click', showStatusContent);
-    document.getElementById('aboutusTab').addEventListener('click', showAboutusContent);
+    document.getElementById('aboutusTab').addEventListener('click', showAboutusContent); // Add event listener for about us tab
 }
 
 // Function to show user profile after successful login
@@ -70,6 +70,20 @@ function showUserProfile(user) {
     document.getElementById('profileVehicleType').textContent = user.vehicleType;
     document.getElementById('profileGpsId').textContent = user.gpsId;
     document.getElementById('userProfile').style.display = 'block';
+}
+
+// Function to show status content
+function showStatusContent() {
+    document.getElementById('keyFeatures').style.display = 'block';
+    document.getElementById('statusContent').style.display = 'block';
+    document.getElementById('gpsInterface').style.display = 'none';
+}
+
+// Function to show about us content
+function showAboutusContent() {
+    document.getElementById('keyFeatures').style.display = 'none';
+    document.getElementById('statusContent').style.display = 'none';
+    document.getElementById('gpsInterface').style.display = 'none';
 }
 
 // Event listener for login form submission
