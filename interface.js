@@ -1,4 +1,4 @@
-let users = [];
+let users = []; // Variable to store parsed CSV data
 
 // Function to fetch user data from the GitHub repository
 function fetchUserData() {
@@ -42,6 +42,7 @@ function handleLogin(event) {
     const user = users.find(user => user.username === username && user.password === password);
 
     if (user) {
+        isLoggedIn = true;
         document.getElementById('loginForm').style.display = 'none';
         document.getElementById('registerForm').style.display = 'none';
         enableTabs();
@@ -52,45 +53,38 @@ function handleLogin(event) {
     }
 }
 
-// Function to handle registration
-function handleRegistration(event) {
-    event.preventDefault();
-    const newUsername = document.getElementById('newUsername').value;
-    const newPassword = document.getElementById('newPassword').value;
-
-    // Check if the username already exists
-    const existingUser = users.find(user => user.username === newUsername);
-    if (existingUser) {
-        alert('Username already exists');
-    } else {
-        users.push({ username: newUsername, password: newPassword });
-        alert('Registration successful');
-        document.getElementById('registerForm').style.display = 'none';
-        document.getElementById('loginForm').style.display = 'block';
-    }
-}
-
+// Function to enable tabs after successful login
 function enableTabs() {
     document.getElementById('statusTab').classList.remove('disabled');
     document.getElementById('aboutusTab').classList.remove('disabled');
+    document.getElementById('statusTab').addEventListener('click', showStatusContent);
+    document.getElementById('aboutusTab').addEventListener('click', showAboutusContent);
 }
 
+// Function to show user profile after successful login
 function showUserProfile(user) {
-    document.getElementById('profileUserId').textContent = user.user_id;
+    document.getElementById('profileUserId').textContent = user.userId;
     document.getElementById('profileUserName').textContent = user.username;
-    document.getElementById('profileVehicleId').textContent = user.vehicle_id;
-    document.getElementById('profileVehicleType').textContent = user.vehicle_type;
-    document.getElementById('profileGpsId').textContent = user.gps_id;
+    document.getElementById('profileVehicleId').textContent = user.vehicleId;
+    document.getElementById('profileVehicleType').textContent = user.vehicleType;
+    document.getElementById('profileGpsId').textContent = user.gpsId;
     document.getElementById('userProfile').style.display = 'block';
 }
 
-// Fetch user data when the script loads
-fetchUserData();
+// Function to fetch journey data
+function fetchJourneyData(vehicleId) {
+    // Replace with your logic to fetch journey data based on vehicleId
+    console.log('Fetching journey data for vehicleId:', vehicleId);
+}
 
-// Attach event listeners
+// Event listener for login form submission
 document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
-document.getElementById('registerFormElem').addEventListener('submit', handleRegistration);
-document.getElementById('registerLink').addEventListener('click', function() {
-    document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('registerForm').style.display = 'block';
+
+// Event listener for register form submission (if needed)
+document.getElementById('registerFormElem').addEventListener('submit', function(event) {
+    event.preventDefault();
+    // Handle registration logic if required
 });
+
+// Fetch user data on page load
+fetchUserData();
