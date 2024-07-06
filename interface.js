@@ -50,6 +50,7 @@ function handleLogin(event) {
         document.getElementById('registerForm').style.display = 'none';
         enableTabs();
         showUserProfile(user); // Display user profile details
+        fetchJourneyData(user.vehicleId); // Fetch journey data after successful login
     } else {
         alert('Invalid username or password');
     }
@@ -93,9 +94,6 @@ function enableTabs() {
     document.getElementById('statusTab').classList.remove('disabled');
     document.getElementById('aboutusTab').classList.remove('disabled');
     document.getElementById('statusTab').addEventListener('click', function() {
-        if (isLoggedIn && loggedInUser) {
-            fetchJourneyData(loggedInUser.vehicleId); // Use the stored user's vehicle ID
-        }
         showStatusContent();
     });
     document.getElementById('aboutusTab').addEventListener('click', showAboutusContent);
@@ -113,7 +111,7 @@ function showUserProfile(user) {
 
 // Function to show status content
 function showStatusContent() {
-    document.getElementById('keyFeatures').style.display = 'block';
+    document.getElementById('keyFeatures').style.display = 'none';
     document.getElementById('statusContent').style.display = 'block';
     document.getElementById('gpsInterface').style.display = 'none';
 }
@@ -124,14 +122,7 @@ function showAboutusContent() {
     document.getElementById('statusContent').style.display = 'none';
     document.getElementById('gpsInterface').style.display = 'none';
 }
-// Event listener for login form submission
-document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
 
-// Event listener for register form submission (if needed)
-document.getElementById('registerFormElem').addEventListener('submit', function(event) {
-    event.preventDefault();
-    // Handle registration logic if required
-});
 // Function to display journey data
 function displayJourneyData(data) {
     // Parse the CSV data
