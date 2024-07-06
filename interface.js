@@ -1,3 +1,5 @@
+// Existing JavaScript code...
+
 let users = []; // Variable to store parsed CSV data
 let isLoggedIn = false; // Flag to track login status
 let loggedInUser = null; // Variable to store the logged-in user's data
