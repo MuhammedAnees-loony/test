@@ -195,23 +195,45 @@ function showAboutusContent() {
 
 // Function to display journey data
 // Function to display journey data
+
 function displayJourneyData() {
     // Check if journeyData is an array and not empty
     if (Array.isArray(journeyData) && journeyData.length > 0) {
         // Separate arrays for distances and fees
         const distances = journeyData.map(journey => journey.distance.toFixed(2)); // Array of distances with two decimal places
         const fees = journeyData.map(journey => journey.fee.toFixed(2)); // Array of fees with two decimal places
-        
-        // Example to print out each distance and fee
+
+        // Update the table rows with journey details
         distances.forEach((distance, index) => {
-            console.log(`Journey ${index + 1}: Distance - ${distance} km, Fee - $${fees[index]}`);
+            const fee = fees[index];
+            const journeyNumber = index + 1;
+
+            // Update table cells with journey data
+            const distanceCell = document.getElementById(`j${journeyNumber}-distance`);
+            const feeCell = document.getElementById(`j${journeyNumber}-fees`);
+
+            if (distanceCell && feeCell) {
+                distanceCell.textContent = `${distance} km`;
+                feeCell.textContent = `$${fee}`;
+            }
         });
 
-        // Now you can proceed to display distances and fees on the frontend as needed
+        // Log the distances and fees for debugging
+        console.log("Distances:", distances);
+        console.log("Fees:", fees);
+
+        // Update the total distance and total toll
+        const totalDistance = distances.reduce((acc, curr) => acc + parseFloat(curr), 0).toFixed(2);
+        const totalToll = fees.reduce((acc, curr) => acc + parseFloat(curr), 0).toFixed(2);
+
+        document.getElementById('totalDistance').textContent = `${totalDistance} km`;
+        document.getElementById('totalToll').textContent = `$${totalToll}`;
+
     } else {
         console.error('Journey data is not an array or is empty:', journeyData);
     }
 }
+
 
 
 // Event listener for login form submission
