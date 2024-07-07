@@ -1,9 +1,11 @@
-// Existing JavaScript code...
-
-let users = []; // Variable to store parsed CSV data
-let isLoggedIn = false; // Flag to track login status
-let loggedInUser = null; // Variable to store the logged-in user's data
-let journeyData = []; // Variable to store journey data received from the backend
+// Variable to store parsed CSV data
+let users = [];
+// Flag to track login status
+let isLoggedIn = false;
+// Variable to store the logged-in user's data
+let loggedInUser = null;
+// Variable to store journey data
+let journeyData = [];
 
 // Function to fetch user data from the GitHub repository
 function fetchUserData() {
@@ -84,7 +86,14 @@ function fetchJourneyData(vehicleId) {
     })
     .then(data => {
         console.log('Journey data fetched successfully:', data);
+
+        // Ensure data is in array format
+        if (!Array.isArray(data)) {
+            data = [data]; // Convert object into single-element array
+        }
+
         journeyData = data; // Store journey data in the variable
+        displayJourneyData(journeyData); // Display journey data upon successful fetch
     })
     .catch(error => {
         console.error('Error making POST request to Flask API:', error);
@@ -115,14 +124,6 @@ function showUserProfile(user) {
 function showStatusContent() {
     document.getElementById('keyFeatures').style.display = 'none';
     document.getElementById('statusContent').style.display = 'block';
-
-    // Display journey data if available
-    if (journeyData.length > 0) {
-        displayJourneyData(journeyData);
-    } else {
-        // Optionally, you can fetch journey data here again if not already fetched
-        console.log('Journey data not fetched yet.');
-    }
 }
 
 // Function to show about us content
