@@ -104,9 +104,7 @@ function fetchJourneyData(vehicleId) {
 function enableTabs() {
     document.getElementById('statusTab').classList.remove('disabled');
     document.getElementById('aboutusTab').classList.remove('disabled');
-    document.getElementById('statusTab').addEventListener('click', function() {
-        showStatusContent();
-    });
+    document.getElementById('statusTab').addEventListener('click', function() {showStatusContent();});
     document.getElementById('aboutusTab').addEventListener('click', showAboutusContent);
 }
 
