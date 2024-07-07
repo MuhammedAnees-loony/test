@@ -135,6 +135,15 @@ function enableTabs() {
     registerForm.style.display = 'none';
     document.getElementById('userProfile').style.display = 'none';
     document.getElementById('statusContent').style.display = 'none';
+
+    // Default state on load
+    if (isLoggedIn) {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'none';
+    } else {
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+    }
 }
 
 // Event listener for login form submission
