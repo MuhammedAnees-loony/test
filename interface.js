@@ -108,7 +108,51 @@ function enableTabs() {
     // Event listeners for tabs
     document.getElementById('statusTab').addEventListener('click', showStatusContent);
     document.getElementById('aboutusTab').addEventListener('click', showAboutusContent);
+    // Login/Register tab
+    const loginTab = document.getElementById('loginTab');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    
+    loginTab.addEventListener('click', function() {
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        document.getElementById('userProfile').style.display = 'none';
+        document.getElementById('statusContent').style.display = 'none';
+        document.getElementById('keyFeatures').style.display = 'none';
+    });
+    
+    // Registration form link
+    const registerLink = document.getElementById('registerLink');
+    registerLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+        document.getElementById('userProfile').style.display = 'none';
+        document.getElementById('statusContent').style.display = 'none';
+        document.getElementById('keyFeatures').style.display = 'none';
+    });
+    
+    // Default state on load
+    loginForm.style.display = 'block';
+    registerForm.style.display = 'none';
+    document.getElementById('userProfile').style.display = 'none';
+    document.getElementById('statusContent').style.display = 'none';
+    document.getElementById('keyFeatures').style.display = 'none';
 }
+
+// Event listener for login form submission
+document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
+
+// Event listener for register form submission
+document.getElementById('registerFormElem').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const password = document.getElementById('newPassword').value;
+    if (!validatePassword(password)) {
+        alert('Password must be at least 8 characters long and contain at least one number, one symbol, and one uppercase letter.');
+        return;
+    }
+    // Handle registration logic if required
+});
 
 // Function to show user profile after successful login
 function showUserProfile(user) {
@@ -197,3 +241,4 @@ document.getElementById('registerLink').addEventListener('click', function(event
 
 // Fetch user data on page load
 fetchUserData();
+enableTabs();
