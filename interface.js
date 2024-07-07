@@ -177,35 +177,25 @@ function showAboutusContent() {
 }
 
 // Function to display journey data
+// Function to display journey data
 function displayJourneyData() {
     // Check if journeyData is an array and not empty
     if (Array.isArray(journeyData) && journeyData.length > 0) {
-        // Clear any existing rows in the table body
-        const journeyTableBody = document.getElementById('journeyTableBody');
-        journeyTableBody.innerHTML = '';
-
-        // Add new rows to the table from journeyData
-        journeyData.forEach((journey, index) => {
-            const row = document.createElement('tr');
-            const journeyCell = document.createElement('td');
-            journeyCell.textContent = `Journey ${index + 1}`;
-            row.appendChild(journeyCell);
-
-            // Add distance and fee cells
-            const distanceCell = document.createElement('td');
-            distanceCell.textContent = journey.distance.toFixed(2); // Display distance with two decimal places
-            row.appendChild(distanceCell);
-
-            const feeCell = document.createElement('td');
-            feeCell.textContent = journey.fee.toFixed(2); // Display fee with two decimal places
-            row.appendChild(feeCell);
-
-            journeyTableBody.appendChild(row);
+        // Separate arrays for distances and fees
+        const distances = journeyData.map(journey => journey.distance.toFixed(2)); // Array of distances with two decimal places
+        const fees = journeyData.map(journey => journey.fee.toFixed(2)); // Array of fees with two decimal places
+        
+        // Example to print out each distance and fee
+        distances.forEach((distance, index) => {
+            console.log(`Journey ${index + 1}: Distance - ${distance} km, Fee - $${fees[index]}`);
         });
+
+        // Now you can proceed to display distances and fees on the frontend as needed
     } else {
         console.error('Journey data is not an array or is empty:', journeyData);
     }
 }
+
 
 // Event listener for login form submission
 document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
