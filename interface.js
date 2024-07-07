@@ -196,13 +196,10 @@ function showAboutusContent() {
 // Function to display journey data
 // Function to display journey data
 
+// Function to display journey data
 function displayJourneyData() {
-    // Check if journeyData is an array and not empty
-    if (Array.isArray(journeyData) && journeyData.length > 0) {
-        // Separate arrays for distances and fees
-        const distances = journeyData.map(journey => journey.distance.toFixed(2)); // Array of distances with two decimal places
-        const fees = journeyData.map(journey => journey.fee.toFixed(2)); // Array of fees with two decimal places
-
+    // Check if fees and distances are arrays and not empty
+    if (Array.isArray(fees) && fees.length > 0 && Array.isArray(distances) && distances.length > 0) {
         // Update the table rows with journey details
         distances.forEach((distance, index) => {
             const fee = fees[index];
@@ -213,8 +210,8 @@ function displayJourneyData() {
             const feeCell = document.getElementById(`j${journeyNumber}-fees`);
 
             if (distanceCell && feeCell) {
-                distanceCell.textContent = `${distance} km`;
-                feeCell.textContent = `$${fee}`;
+                distanceCell.textContent = `${distance.toFixed(2)} km`;
+                feeCell.textContent = `$${fee.toFixed(2)}`;
             }
         });
 
@@ -230,9 +227,10 @@ function displayJourneyData() {
         document.getElementById('totalToll').textContent = `$${totalToll}`;
 
     } else {
-        console.error('Journey data is not an array or is empty:', journeyData);
+        console.error('Fees or distances array is not valid or is empty.');
     }
 }
+
 
 
 
