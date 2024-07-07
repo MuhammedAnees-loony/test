@@ -124,26 +124,23 @@ function showAboutusContent() {
 
 // Function to display journey data
 function displayJourneyData(data) {
-    // Check if data is an array
-    if (!Array.isArray(data)) {
-        console.error('Journey data is not an array:', data);
-        return;
-    }
+    // Assuming data is already in JSON format
+    const journeyData = data;
 
     // Clear any existing rows in the table body
     const journeyTableBody = document.getElementById('journeyTableBody');
     journeyTableBody.innerHTML = '';
 
     // Add new rows to the table
-    data.forEach((journey, index) => {
+    journeyData.forEach((journey, index) => {
         const row = document.createElement('tr');
         const journeyCell = document.createElement('td');
         journeyCell.textContent = `Journey ${index + 1}`;
         row.appendChild(journeyCell);
 
-        for (const cellData of Object.values(journey)) {
+        for (const [key, value] of Object.entries(journey)) {
             const cell = document.createElement('td');
-            cell.textContent = cellData;
+            cell.textContent = value;
             row.appendChild(cell);
         }
 
