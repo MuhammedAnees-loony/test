@@ -90,6 +90,23 @@ function fetchJourneyData(vehicleId) {
 
         // Ensure data is an array before storing or displaying
         if (Array.isArray(data)) {
+            
+        // Parse the JSON string to convert it to a JavaScript object
+            let jsonObject = JSON.parse(data);
+
+// Initialize arrays to store distances and fees
+            let distances = [];
+            let fees = [];
+
+// Loop through the JSON object and extract values
+            jsonObject.forEach(item => {
+                distances.push(item.distance);
+                fees.push(item.fee);
+            });
+
+// Now you have two arrays: distances and fees
+            console.log("Distances:", distances);
+            console.log("Fees:", fees);
             journeyData = data; // Store journey data for later use
             showStatusContent(); // Display journey data when status tab is clicked
         } else {
