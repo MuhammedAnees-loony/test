@@ -199,10 +199,10 @@ function showAboutusContent() {
 // Function to display journey data
 function displayJourneyData() {
     // Check if fees and distances are arrays and not empty
-    if (Array.isArray(fees) && fees.length > 0 && Array.isArray(distances) && distances.length > 0) {
+    if (Array.isArray(Fees) && Fees.length > 0 && Array.isArray(Distances) && Distances.length > 0) {
         // Update the table rows with journey details
-        distances.forEach((distance, index) => {
-            const fee = fees[index];
+        Distances.forEach((distance, index) => {
+            const fee = Fees[index];
             const journeyNumber = index + 1;
 
             // Update table cells with journey data
