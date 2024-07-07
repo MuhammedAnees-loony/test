@@ -7,6 +7,8 @@ let isLoggedIn = false;
 let loggedInUser = null;
 // Variable to store fetched journey data
 let journeyData = [];
+let distances = [];
+let fees = [];
 
 // Function to fetch user data from the GitHub repository
 function fetchUserData() {
@@ -90,9 +92,7 @@ function fetchJourneyData(vehicleId) {
             let jsonObject = JSON.parse(data);
 
 // Initialize arrays to store distances and fees
-            let distances = [];
-            let fees = [];
-
+           
 // Loop through the JSON object and extract values
             jsonObject.forEach(item => {
                 distances.push(item.distance);
