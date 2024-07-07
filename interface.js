@@ -124,25 +124,31 @@ function showAboutusContent() {
 
 // Function to display journey data
 function displayJourneyData(data) {
-    // Assuming data is already in JSON format
-    const journeyData = data;
+    // Check if data is an array
+    if (!Array.isArray(data)) {
+        console.error('Journey data is not an array:', data);
+        return;
+    }
 
     // Clear any existing rows in the table body
     const journeyTableBody = document.getElementById('journeyTableBody');
     journeyTableBody.innerHTML = '';
 
     // Add new rows to the table
-    journeyData.forEach((journey, index) => {
+    data.forEach((journey, index) => {
         const row = document.createElement('tr');
         const journeyCell = document.createElement('td');
         journeyCell.textContent = `Journey ${index + 1}`;
         row.appendChild(journeyCell);
 
-        for (const [key, value] of Object.entries(journey)) {
-            const cell = document.createElement('td');
-            cell.textContent = value;
-            row.appendChild(cell);
-        }
+        // Add distance and fee cells
+        const distanceCell = document.createElement('td');
+        distanceCell.textContent = journey.distance.toFixed(2); // Display distance with two decimal places
+        row.appendChild(distanceCell);
+
+        const feeCell = document.createElement('td');
+        feeCell.textContent = journey.fee.toFixed(2); // Display fee with two decimal places
+        row.appendChild(feeCell);
 
         journeyTableBody.appendChild(row);
     });
