@@ -79,12 +79,11 @@ function fetchJourneyData(vehicleId) {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        // Assuming the backend returns JSON data
-        return response.json();
+        return response.json(); // Expecting JSON response
     })
     .then(data => {
         console.log('Journey data fetched successfully:', data);
-        displayJourneyData(data);
+        displayJourneyData(data); // Use the response data directly
     })
     .catch(error => {
         console.error('Error making POST request to Flask API:', error);
@@ -125,7 +124,11 @@ function showAboutusContent() {
 
 // Function to display journey data
 function displayJourneyData(data) {
-    // Assuming data is already in JSON format
+    // Check if data is an array
+    if (!Array.isArray(data)) {
+        console.error('Journey data is not an array:', data);
+        return;
+    }
 
     // Clear any existing rows in the table body
     const journeyTableBody = document.getElementById('journeyTableBody');
