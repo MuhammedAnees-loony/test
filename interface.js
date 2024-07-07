@@ -1,11 +1,8 @@
-// Variable to store parsed CSV data
-let users = [];
-// Flag to track login status
-let isLoggedIn = false;
-// Variable to store the logged-in user's data
-let loggedInUser = null;
-// Variable to store journey data
-let journeyData = [];
+// Existing JavaScript code...
+
+let users = []; // Variable to store parsed CSV data
+let isLoggedIn = false; // Flag to track login status
+let loggedInUser = null; // Variable to store the logged-in user's data
 
 // Function to fetch user data from the GitHub repository
 function fetchUserData() {
@@ -86,14 +83,7 @@ function fetchJourneyData(vehicleId) {
     })
     .then(data => {
         console.log('Journey data fetched successfully:', data);
-
-        // Ensure data is in array format
-        if (!Array.isArray(data)) {
-            data = [data]; // Convert object into single-element array
-        }
-
-        journeyData = data; // Store journey data in the variable
-        displayJourneyData(journeyData); // Display journey data upon successful fetch
+        displayJourneyData(data); // Use the response data directly
     })
     .catch(error => {
         console.error('Error making POST request to Flask API:', error);
@@ -146,21 +136,25 @@ function displayJourneyData(data) {
 
     // Add new rows to the table
     data.forEach((journey, index) => {
-        const row = document.createElement('tr');
-        const journeyCell = document.createElement('td');
-        journeyCell.textContent = `Journey ${index + 1}`;
-        row.appendChild(journeyCell);
+        if (journey && typeof journey.distance === 'number' && typeof journey.fee === 'number') {
+            const row = document.createElement('tr');
+            const journeyCell = document.createElement('td');
+            journeyCell.textContent = `Journey ${index + 1}`;
+            row.appendChild(journeyCell);
 
-        // Add distance and fee cells
-        const distanceCell = document.createElement('td');
-        distanceCell.textContent = journey.distance.toFixed(2); // Display distance with two decimal places
-        row.appendChild(distanceCell);
+            // Add distance and fee cells, ensuring they exist and are numbers
+            const distanceCell = document.createElement('td');
+            distanceCell.textContent = journey.distance.toFixed(2); // Display distance with two decimal places
+            row.appendChild(distanceCell);
 
-        const feeCell = document.createElement('td');
-        feeCell.textContent = journey.fee.toFixed(2); // Display fee with two decimal places
-        row.appendChild(feeCell);
+            const feeCell = document.createElement('td');
+            feeCell.textContent = journey.fee.toFixed(2); // Display fee with two decimal places
+            row.appendChild(feeCell);
 
-        journeyTableBody.appendChild(row);
+            journeyTableBody.appendChild(row);
+        } else {
+            console.error(`Invalid journey data at index ${index}:`, journey);
+        }
     });
 }
 
