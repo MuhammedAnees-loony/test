@@ -1,9 +1,8 @@
-// Variable to store parsed CSV data
-let users = []; 
-// Flag to track login status
-let isLoggedIn = false; 
-// Variable to store the logged-in user's data
-let loggedInUser = null; 
+// Existing JavaScript code...
+
+let users = []; // Variable to store parsed CSV data
+let isLoggedIn = false; // Flag to track login status
+let loggedInUser = null; // Variable to store the logged-in user's data
 
 // Function to fetch user data from the GitHub repository
 function fetchUserData() {
@@ -129,11 +128,14 @@ function displayJourneyData(data) {
     try {
         let journeyData = [];
 
-        // Check if data is an array; if not, attempt to parse it as JSON
+        // Check if data is already an array; if not, parse it as JSON
         if (Array.isArray(data)) {
             journeyData = data;
         } else {
             journeyData = JSON.parse(data);
+            if (!Array.isArray(journeyData)) {
+                throw new Error('Parsed data is not an array');
+            }
         }
 
         // Clear any existing rows in the table body
@@ -164,6 +166,15 @@ function displayJourneyData(data) {
     } catch (error) {
         console.error('Error parsing journey data:', error);
     }
+}
+
+// Function to update total distance and total toll
+function updateTotalDistanceAndToll(journeyData) {
+    const totalDistance = journeyData.reduce((total, journey) => total + journey.distance, 0);
+    const totalToll = journeyData.reduce((total, journey) => total + journey.fee, 0);
+
+    document.getElementById('totalDistance').textContent = totalDistance.toFixed(2);
+    document.getElementById('totalToll').textContent = totalToll.toFixed(2);
 }
 
 // Event listener for login form submission
