@@ -204,7 +204,7 @@ function displayJourneyData() {
     if (Array.isArray(fees) && fees.length > 0 && Array.isArray(distances) && distances.length > 0) {
         // Update the table rows with journey details
         distances.forEach((distance, index) => {
-            const fee = Fees[index];
+            const fee = fees[index];
             const journeyNumber = index + 1;
 
             // Update table cells with journey data
