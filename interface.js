@@ -129,28 +129,33 @@ function showStatusContent() {
 
 // Function to display journey data
 function displayJourneyData() {
-    // Clear any existing rows in the table body
-    const journeyTableBody = document.getElementById('journeyTableBody');
-    journeyTableBody.innerHTML = '';
+    // Check if journeyData is an array and not empty
+    if (Array.isArray(journeyData) && journeyData.length > 0) {
+        // Clear any existing rows in the table body
+        const journeyTableBody = document.getElementById('journeyTableBody');
+        journeyTableBody.innerHTML = '';
 
-    // Add new rows to the table from stored journeyData
-    journeyData.forEach((journey, index) => {
-        const row = document.createElement('tr');
-        const journeyCell = document.createElement('td');
-        journeyCell.textContent = `Journey ${index + 1}`;
-        row.appendChild(journeyCell);
+        // Add new rows to the table from journeyData
+        journeyData.forEach((journey, index) => {
+            const row = document.createElement('tr');
+            const journeyCell = document.createElement('td');
+            journeyCell.textContent = `Journey ${index + 1}`;
+            row.appendChild(journeyCell);
 
-        // Add distance and fee cells
-        const distanceCell = document.createElement('td');
-        distanceCell.textContent = journey.distance.toFixed(2); // Display distance with two decimal places
-        row.appendChild(distanceCell);
+            // Add distance and fee cells
+            const distanceCell = document.createElement('td');
+            distanceCell.textContent = journey.distance.toFixed(2); // Display distance with two decimal places
+            row.appendChild(distanceCell);
 
-        const feeCell = document.createElement('td');
-        feeCell.textContent = journey.fee.toFixed(2); // Display fee with two decimal places
-        row.appendChild(feeCell);
+            const feeCell = document.createElement('td');
+            feeCell.textContent = journey.fee.toFixed(2); // Display fee with two decimal places
+            row.appendChild(feeCell);
 
-        journeyTableBody.appendChild(row);
-    });
+            journeyTableBody.appendChild(row);
+        });
+    } else {
+        console.error('Journey data is not an array or is empty:', journeyData);
+    }
 }
 
 // Event listener for login form submission
