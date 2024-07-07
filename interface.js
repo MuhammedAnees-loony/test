@@ -125,6 +125,12 @@ function showStatusContent() {
     displayJourneyData(); // Display journey data in the table
 }
 
+// Function to show about us content
+function showAboutusContent() {
+    document.getElementById('keyFeatures').style.display = 'none';
+    document.getElementById('statusContent').style.display = 'none';
+}
+
 // Function to display journey data
 function displayJourneyData() {
     // Check if journeyData is an array and not empty
