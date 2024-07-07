@@ -63,7 +63,7 @@ function handleLogin(event) {
 
 // Function to fetch journey data
 function fetchJourneyData(vehicleId) {
-    const apiUrl = 'http://127.0.0.1:8000/predict?vehicleId=' + encodeURIComponent(vehicleId);
+    const apiUrl = 'http://127.0.0.1:5000/predict?vehicleId=' + encodeURIComponent(vehicleId);
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
