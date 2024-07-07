@@ -63,48 +63,23 @@ function handleLogin(event) {
 
 // Function to fetch journey data
 function fetchJourneyData(vehicleId) {
-    const apiUrl = 'http://127.0.0.1:5000/predict'; // Replace with your Flask API URL
-
-    // Prepare the request body
-    const requestBody = {
-        vehicle_id: vehicleId
-    };
-
-    // Send POST request to Flask API
-    fetch(apiUrl, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(requestBody)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json(); // Expecting JSON response
-    })
-    .then(data => {
-        console.log('Journey data fetched successfully:', data);
-
-        // Ensure data is an array before storing or displaying
-        if (Array.isArray(data)) {
-            journeyData = data; // Store journey data for later use
-            showStatusContent(); // Display journey data when status tab is clicked
-        } else {
-            console.error('Journey data format is not as expected:', data);
-        }
-    })
-    .catch(error => {
-        console.error('Error making POST request to Flask API:', error);
-    });
+    const apiUrl = 'http://127.0.0.1:8000/predict?vehicleId=' + encodeURIComponent(vehicleId);
+    fetch(apiUrl)
+        .then(response => response.json())
+        .then(data => {
+            journeyData = data;
+            displayJourneyData();
+        })
+        .catch(error => console.error('Error fetching journey data:', error));
 }
 
-// Function to enable tabs after successful login
+// Function to enable status and about us tabs
 function enableTabs() {
     document.getElementById('statusTab').classList.remove('disabled');
     document.getElementById('aboutusTab').classList.remove('disabled');
-    document.getElementById('statusTab').addEventListener('click', function() {showStatusContent();});
+
+    // Event listeners for tabs
+    document.getElementById('statusTab').addEventListener('click', showStatusContent);
     document.getElementById('aboutusTab').addEventListener('click', showAboutusContent);
 }
 
@@ -165,10 +140,32 @@ function displayJourneyData() {
 // Event listener for login form submission
 document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
 
-// Event listener for register form submission (if needed)
+// Event listener for register form submission
 document.getElementById('registerFormElem').addEventListener('submit', function(event) {
     event.preventDefault();
+    const password = document.getElementById('newPassword').value;
+    if (!validatePassword(password)) {
+        alert('Password must be at least 8 characters long and contain at least one number, one symbol, and one uppercase letter.');
+        return;
+    }
     // Handle registration logic if required
+});
+
+// Function to validate password based on the given criteria
+function validatePassword(password) {
+    const minLength = 8;
+    const hasNumber = /\d/;
+    const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/;
+    const hasUpperCase = /[A-Z]/;
+
+    return password.length >= minLength && hasNumber.test(password) && hasSymbol.test(password) && hasUpperCase.test(password);
+}
+
+// Event listener for registration link click
+document.getElementById('registerLink').addEventListener('click', function(event) {
+    event.preventDefault();
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'block';
 });
 
 // Fetch user data on page load
