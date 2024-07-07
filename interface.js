@@ -102,15 +102,7 @@ function fetchJourneyData(vehicleId) {
 // Now you have two arrays: distances and fees
             console.log("Distances:", distances);
             console.log("Fees:", fees);
-          if (Array.isArray(data)) {
-
-        // Parse the JSON string to convert it to a JavaScript object
-
-            journeyData = data; // Store journey data for later use
-            showStatusContent(); // Display journey data when status tab is clicked
-        } else {
-            console.error('Journey data format is not as expected:', data);
-        }
+          
             
         
   
