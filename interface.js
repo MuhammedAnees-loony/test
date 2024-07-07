@@ -1,13 +1,10 @@
 // Variable to store parsed CSV data
 let users = [];
-
 // Flag to track login status
 let isLoggedIn = false;
-
 // Variable to store the logged-in user's data
 let loggedInUser = null;
-
-// Variable to store journey data fetched from the backend
+// Variable to store fetched journey data
 let journeyData = [];
 
 // Function to fetch user data from the GitHub repository
@@ -89,7 +86,14 @@ function fetchJourneyData(vehicleId) {
     })
     .then(data => {
         console.log('Journey data fetched successfully:', data);
-        journeyData = data; // Store journey data for later use
+
+        // Ensure data is an array before storing or displaying
+        if (Array.isArray(data)) {
+            journeyData = data; // Store journey data for later use
+            showStatusContent(); // Display journey data when status tab is clicked
+        } else {
+            console.error('Journey data format is not as expected:', data);
+        }
     })
     .catch(error => {
         console.error('Error making POST request to Flask API:', error);
@@ -120,54 +124,32 @@ function showUserProfile(user) {
 function showStatusContent() {
     document.getElementById('keyFeatures').style.display = 'none';
     document.getElementById('statusContent').style.display = 'block';
-    
-    // Display journey data in the table
-    displayJourneyData(journeyData);
-}
-
-// Function to show about us content
-function showAboutusContent() {
-    document.getElementById('keyFeatures').style.display = 'none';
-    document.getElementById('statusContent').style.display = 'none';
+    displayJourneyData(); // Display journey data in the table
 }
 
 // Function to display journey data
-function displayJourneyData(data) {
-    // Check if data is an array
-    if (!Array.isArray(data)) {
-        console.error('Journey data is not an array:', data);
-        return;
-    }
-
+function displayJourneyData() {
     // Clear any existing rows in the table body
     const journeyTableBody = document.getElementById('journeyTableBody');
     journeyTableBody.innerHTML = '';
 
-    // Add new rows to the table
-    data.forEach((journey, index) => {
-        if (typeof journey.distance === 'number' && typeof journey.fee === 'number') {
-            const row = document.createElement('tr');
-            
-            // Journey number cell
-            const journeyCell = document.createElement('td');
-            journeyCell.textContent = `Journey ${index + 1}`;
-            row.appendChild(journeyCell);
+    // Add new rows to the table from stored journeyData
+    journeyData.forEach((journey, index) => {
+        const row = document.createElement('tr');
+        const journeyCell = document.createElement('td');
+        journeyCell.textContent = `Journey ${index + 1}`;
+        row.appendChild(journeyCell);
 
-            // Distance cell
-            const distanceCell = document.createElement('td');
-            distanceCell.textContent = journey.distance.toFixed(2); // Display distance with two decimal places
-            row.appendChild(distanceCell);
+        // Add distance and fee cells
+        const distanceCell = document.createElement('td');
+        distanceCell.textContent = journey.distance.toFixed(2); // Display distance with two decimal places
+        row.appendChild(distanceCell);
 
-            // Fee cell
-            const feeCell = document.createElement('td');
-            feeCell.textContent = journey.fee.toFixed(2); // Display fee with two decimal places
-            row.appendChild(feeCell);
+        const feeCell = document.createElement('td');
+        feeCell.textContent = journey.fee.toFixed(2); // Display fee with two decimal places
+        row.appendChild(feeCell);
 
-            // Append row to table body
-            journeyTableBody.appendChild(row);
-        } else {
-            console.error(`Invalid journey data at index ${index}:`, journey);
-        }
+        journeyTableBody.appendChild(row);
     });
 }
 
