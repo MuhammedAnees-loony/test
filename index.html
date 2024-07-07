@@ -58,30 +58,30 @@
                     <tbody id="journeyTableBody">
                         <!-- Rows will be dynamically added here -->
                         <tr>
-                                <td>Journey 1</td>
-                                <td id="j1-distance">--</td>
-                                <td id="j1-fees">--</td>
-                            </tr>
-                            <tr>
-                                <td>Journey 2</td>
-                                <td id="j2-distance">--</td>
-                                <td id="j2-fees">--</td>
-                            </tr>
-                            <tr>
-                                <td>Journey 3</td>
-                                <td id="j3-distance">--</td>
-                                <td id="j3-fees">--</td>
-                            </tr>
-                            <tr>
-                                <td>Journey 4</td>
-                                <td id="j4-distance">--</td>
-                                <td id="j4-fees">--</td>
-                            </tr>
-                            <tr>
-                                <td>Journey 5</td>
-                                <td id="j5-distance">--</td>
-                                <td id="j5-fees">--</td>
-                            </tr>
+                            <td>Journey 1</td>
+                            <td id="j1-distance">--</td>
+                            <td id="j1-fees">--</td>
+                        </tr>
+                        <tr>
+                            <td>Journey 2</td>
+                            <td id="j2-distance">--</td>
+                            <td id="j2-fees">--</td>
+                        </tr>
+                        <tr>
+                            <td>Journey 3</td>
+                            <td id="j3-distance">--</td>
+                            <td id="j3-fees">--</td>
+                        </tr>
+                        <tr>
+                            <td>Journey 4</td>
+                            <td id="j4-distance">--</td>
+                            <td id="j4-fees">--</td>
+                        </tr>
+                        <tr>
+                            <td>Journey 5</td>
+                            <td id="j5-distance">--</td>
+                            <td id="j5-fees">--</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -104,7 +104,20 @@
                     <label for="newUsername">New Username:</label><br>
                     <input type="text" id="newUsername" name="newUsername" required><br><br>
                     <label for="newPassword">New Password:</label><br>
-                    <input type="password" id="newPassword" name="newPassword" required><br><br>
+                    <input type="password" id="newPassword" name="newPassword" required><br>
+                    <small>Password must be at least 8 characters long and contain at least one number, one symbol, and one uppercase letter.</small><br><br>
+                    <label for="newVehicleId">Vehicle ID (Format: V followed by 3 digits):</label><br>
+                    <input type="text" id="newVehicleId" name="newVehicleId" pattern="V\d{3}" required><br>
+                    <small>Example: V123</small><br><br>
+                    <label for="newVehicleType">Vehicle Type (Format: H, M, T, or S):</label><br>
+                    <input type="text" id="newVehicleType" name="newVehicleType" pattern="[HMTS]" required><br>
+                    <small>Example: H, M, T, or S</small><br><br>
+                    <label for="newGpsId">GPS ID (Format: G followed by 3 digits):</label><br>
+                    <input type="text" id="newGpsId" name="newGpsId" pattern="G\d{3}" required><br>
+                    <small>Example: G123</small><br><br>
+                    <label for="newUserId">User ID (Format: CC- followed by 3 digits):</label><br>
+                    <input type="text" id="newUserId" name="newUserId" pattern="CC-\d{3}" required><br>
+                    <small>Example: CC-123</small><br><br>
                     <input type="submit" value="Register">
                 </form>
             </div>
