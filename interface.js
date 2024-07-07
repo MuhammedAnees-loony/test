@@ -1,3 +1,4 @@
+
 // Variable to store parsed CSV data
 let users = [];
 // Flag to track login status
@@ -130,12 +131,6 @@ function enableTabs() {
         document.getElementById('statusContent').style.display = 'none';
     });
     
-    // Default state on load
-    loginForm.style.display = 'block';
-    registerForm.style.display = 'none';
-    document.getElementById('userProfile').style.display = 'none';
-    document.getElementById('statusContent').style.display = 'none';
-
     // Default state on load
     if (isLoggedIn) {
         loginForm.style.display = 'none';
