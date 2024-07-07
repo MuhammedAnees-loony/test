@@ -63,14 +63,41 @@ function handleLogin(event) {
 
 // Function to fetch journey data
 function fetchJourneyData(vehicleId) {
-    const apiUrl = 'http://127.0.0.1:5000/predict?vehicleId=' + encodeURIComponent(vehicleId);
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            journeyData = data;
-            displayJourneyData();
-        })
-        .catch(error => console.error('Error fetching journey data:', error));
+    const apiUrl = 'http://127.0.0.1:5000/predict'; // Replace with your Flask API URL
+
+    // Prepare the request body
+    const requestBody = {
+        vehicle_id: vehicleId
+    };
+
+    // Send POST request to Flask API
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Expecting JSON response
+    })
+    .then(data => {
+        console.log('Journey data fetched successfully:', data);
+
+        // Ensure data is an array before storing or displaying
+        if (Array.isArray(data)) {
+            journeyData = data; // Store journey data for later use
+            showStatusContent(); // Display journey data when status tab is clicked
+        } else {
+            console.error('Journey data format is not as expected:', data);
+        }
+    })
+    .catch(error => {
+        console.error('Error making POST request to Flask API:', error);
+    });
 }
 
 // Function to enable status and about us tabs
