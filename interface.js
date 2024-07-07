@@ -163,14 +163,12 @@ function showUserProfile(user) {
 
 // Function to show status content
 function showStatusContent() {
-    document.getElementById('keyFeatures').style.display = 'none';
     document.getElementById('statusContent').style.display = 'block';
     displayJourneyData(); // Display journey data in the table
 }
 
 // Function to show about us content
 function showAboutusContent() {
-    document.getElementById('keyFeatures').style.display = 'none';
     document.getElementById('statusContent').style.display = 'none';
 }
 
