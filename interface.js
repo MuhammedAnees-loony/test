@@ -79,12 +79,11 @@ function fetchJourneyData(vehicleId) {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        // Assuming the backend returns JSON data
-        return response.json();
+        return response.json(); // Expecting JSON response
     })
     .then(data => {
         console.log('Journey data fetched successfully:', data);
-        displayJourneyData(data);
+        displayJourneyData(data); // Use the response data directly
     })
     .catch(error => {
         console.error('Error making POST request to Flask API:', error);
@@ -125,56 +124,34 @@ function showAboutusContent() {
 
 // Function to display journey data
 function displayJourneyData(data) {
-    try {
-        let journeyData = [];
-
-        // Check if data is already an array; if not, parse it as JSON
-        if (Array.isArray(data)) {
-            journeyData = data;
-        } else {
-            journeyData = JSON.parse(data);
-            if (!Array.isArray(journeyData)) {
-                throw new Error('Parsed data is not an array');
-            }
-        }
-
-        // Clear any existing rows in the table body
-        const journeyTableBody = document.getElementById('journeyTableBody');
-        journeyTableBody.innerHTML = '';
-
-        // Add new rows to the table
-        journeyData.forEach((journey, index) => {
-            const row = document.createElement('tr');
-            const journeyCell = document.createElement('td');
-            journeyCell.textContent = `Journey ${index + 1}`;
-            row.appendChild(journeyCell);
-
-            // Add distance and fee cells
-            const distanceCell = document.createElement('td');
-            distanceCell.textContent = journey.distance.toFixed(2); // Display distance rounded to 2 decimal places
-            row.appendChild(distanceCell);
-
-            const feeCell = document.createElement('td');
-            feeCell.textContent = journey.fee.toFixed(2); // Display fee rounded to 2 decimal places
-            row.appendChild(feeCell);
-
-            journeyTableBody.appendChild(row);
-        });
-
-        // Optional: Update total distance and total toll if needed
-        updateTotalDistanceAndToll(journeyData);
-    } catch (error) {
-        console.error('Error parsing journey data:', error);
+    // Check if data is an array
+    if (!Array.isArray(data)) {
+        console.error('Journey data is not an array:', data);
+        return;
     }
-}
 
-// Function to update total distance and total toll
-function updateTotalDistanceAndToll(journeyData) {
-    const totalDistance = journeyData.reduce((total, journey) => total + journey.distance, 0);
-    const totalToll = journeyData.reduce((total, journey) => total + journey.fee, 0);
+    // Clear any existing rows in the table body
+    const journeyTableBody = document.getElementById('journeyTableBody');
+    journeyTableBody.innerHTML = '';
 
-    document.getElementById('totalDistance').textContent = totalDistance.toFixed(2);
-    document.getElementById('totalToll').textContent = totalToll.toFixed(2);
+    // Add new rows to the table
+    data.forEach((journey, index) => {
+        const row = document.createElement('tr');
+        const journeyCell = document.createElement('td');
+        journeyCell.textContent = `Journey ${index + 1}`;
+        row.appendChild(journeyCell);
+
+        // Add distance and fee cells
+        const distanceCell = document.createElement('td');
+        distanceCell.textContent = journey.distance.toFixed(2); // Display distance with two decimal places
+        row.appendChild(distanceCell);
+
+        const feeCell = document.createElement('td');
+        feeCell.textContent = journey.fee.toFixed(2); // Display fee with two decimal places
+        row.appendChild(feeCell);
+
+        journeyTableBody.appendChild(row);
+    });
 }
 
 // Event listener for login form submission
