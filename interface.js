@@ -1,18 +1,19 @@
-// Existing JavaScript code...
-
-let users = []; // Variable to store parsed CSV data
-let isLoggedIn = false; // Flag to track login status
-let loggedInUser = null; // Variable to store the logged-in user's data
+// Variable to store parsed CSV data
+let users = [];
+// Flag to track login status
+let isLoggedIn = false;
+// Variable to store the logged-in user's data
+let loggedInUser = null;
 
 // Function to fetch user data from the GitHub repository
 function fetchUserData() {
-    const userCsvPath = 'https://raw.githubusercontent.com/MuhammedAnees-loony/test/main/login.csv';  // GitHub URL for user data
+    const userCsvPath = 'https://raw.githubusercontent.com/MuhammedAnees-loony/test/main/login.csv'; // GitHub URL for user data
 
     fetch(userCsvPath)
         .then(response => response.text())
         .then(data => {
             users = parseCSV(data);
-            console.log('User data fetched:', users);  // Log the fetched user data for debugging
+            console.log('User data fetched:', users); // Log the fetched user data for debugging
         })
         .catch(error => console.error('Error fetching user data:', error));
 }
@@ -79,11 +80,12 @@ function fetchJourneyData(vehicleId) {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        return response.json(); // Expecting JSON response
+        // Assuming the backend returns JSON data
+        return response.json();
     })
     .then(data => {
         console.log('Journey data fetched successfully:', data);
-        displayJourneyData(data); // Use the response data directly
+        displayJourneyData(data);
     })
     .catch(error => {
         console.error('Error making POST request to Flask API:', error);
@@ -124,34 +126,47 @@ function showAboutusContent() {
 
 // Function to display journey data
 function displayJourneyData(data) {
-    // Check if data is an array
-    if (!Array.isArray(data)) {
-        console.error('Journey data is not an array:', data);
-        return;
+    try {
+        const journeyData = data; // Assuming data is already in the correct format
+
+        // Clear any existing rows in the table body
+        const journeyTableBody = document.getElementById('journeyTableBody');
+        journeyTableBody.innerHTML = '';
+
+        // Add new rows to the table
+        journeyData.forEach((journey, index) => {
+            const row = document.createElement('tr');
+            const journeyCell = document.createElement('td');
+            journeyCell.textContent = `Journey ${index + 1}`;
+            row.appendChild(journeyCell);
+
+            // Add distance and fee cells
+            const distanceCell = document.createElement('td');
+            distanceCell.textContent = journey.distance.toFixed(2); // Display distance rounded to 2 decimal places
+            row.appendChild(distanceCell);
+
+            const feeCell = document.createElement('td');
+            feeCell.textContent = journey.fee.toFixed(2); // Display fee rounded to 2 decimal places
+            row.appendChild(feeCell);
+
+            journeyTableBody.appendChild(row);
+        });
+
+        // Optional: Update total distance and total toll if needed
+        updateTotalDistanceAndToll(journeyData);
+    } catch (error) {
+        console.error('Error parsing journey data:', error);
     }
+}
 
-    // Clear any existing rows in the table body
-    const journeyTableBody = document.getElementById('journeyTableBody');
-    journeyTableBody.innerHTML = '';
+// Function to update total distance and total toll
+function updateTotalDistanceAndToll(journeyData) {
+    const totalDistance = journeyData.reduce((total, journey) => total + journey.distance, 0);
+    const totalToll = journeyData.reduce((total, journey) => total + journey.fee, 0);
 
-    // Add new rows to the table
-    data.forEach((journey, index) => {
-        const row = document.createElement('tr');
-        const journeyCell = document.createElement('td');
-        journeyCell.textContent = `Journey ${index + 1}`;
-        row.appendChild(journeyCell);
-
-        // Add distance and fee cells
-        const distanceCell = document.createElement('td');
-        distanceCell.textContent = journey.distance.toFixed(2); // Display distance with two decimal places
-        row.appendChild(distanceCell);
-
-        const feeCell = document.createElement('td');
-        feeCell.textContent = journey.fee.toFixed(2); // Display fee with two decimal places
-        row.appendChild(feeCell);
-
-        journeyTableBody.appendChild(row);
-    });
+    // Display total distance and total toll in HTML elements
+    document.getElementById('totalDistance').textContent = totalDistance.toFixed(2);
+    document.getElementById('totalToll').textContent = totalToll.toFixed(2);
 }
 
 // Event listener for login form submission
