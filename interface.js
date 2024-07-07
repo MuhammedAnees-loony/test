@@ -203,7 +203,7 @@ function displayJourneyData() {
     // Check if fees and distances are arrays and not empty
     if (Array.isArray(fees) && fees.length > 0 && Array.isArray(distances) && distances.length > 0) {
         // Update the table rows with journey details
-        Distances.forEach((distance, index) => {
+        distances.forEach((distance, index) => {
             const fee = Fees[index];
             const journeyNumber = index + 1;
 
