@@ -79,8 +79,8 @@ function fetchJourneyData(vehicleId) {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        // Assuming the backend returns CSV data
-        return response.text();
+        // Assuming the backend returns JSON data
+        return response.json();
     })
     .then(data => {
         console.log('Journey data fetched successfully:', data);
@@ -125,15 +125,14 @@ function showAboutusContent() {
 
 // Function to display journey data
 function displayJourneyData(data) {
-    // Parse the CSV data
-    const journeyData = parseCSV(data);
+    // Assuming data is already in JSON format
 
     // Clear any existing rows in the table body
     const journeyTableBody = document.getElementById('journeyTableBody');
     journeyTableBody.innerHTML = '';
 
     // Add new rows to the table
-    journeyData.forEach((journey, index) => {
+    data.forEach((journey, index) => {
         const row = document.createElement('tr');
         const journeyCell = document.createElement('td');
         journeyCell.textContent = `Journey ${index + 1}`;
