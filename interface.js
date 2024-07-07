@@ -108,6 +108,7 @@ function enableTabs() {
     // Event listeners for tabs
     document.getElementById('statusTab').addEventListener('click', showStatusContent);
     document.getElementById('aboutusTab').addEventListener('click', showAboutusContent);
+}
     // Login/Register tab
     const loginTab = document.getElementById('loginTab');
     const loginForm = document.getElementById('loginForm');
