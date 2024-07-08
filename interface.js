@@ -44,7 +44,6 @@ function handleLogin(event) {
     event.preventDefault();
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-
     // Check if the provided username and password match any user in the array
     const user = users.find(user => user.username === username && user.password === password);
 
