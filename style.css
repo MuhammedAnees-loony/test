@@ -422,6 +422,39 @@ footer p {
     border-radius: 5px;
     height: 400px; /* Adjust height as needed */
 }
+#paymentContainer {
+    margin-top: 20px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#payButton {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+#payButton:hover {
+    background-color: #0056b3;
+}
+
+#qrCodeContainer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#qrCodeContainer img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
+}
 
 /* Cubes Hosting */
 .ch-container {
