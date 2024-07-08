@@ -207,6 +207,7 @@ table th {
 /* Adjust visibility and styling based on JavaScript interactions */
 #userProfile.active,
 #statusContent.active,
+#aboutusContent.active,
 #keyFeatures.active {
     display: block; /* Display user profile, status content, and key features when active */
 }
@@ -221,6 +222,11 @@ table th {
 #aboutusTab.disabled {
     pointer-events: none; /* Disable tab interaction if disabled */
     opacity: 0.6; /* Reduce opacity for disabled state */
+}
+#statusTab.active,
+#aboutusTab.active {
+    color: #0056b3; /* Active tab color */
+    font-weight: bold; /* Active tab font weight */
 }
 #registerForm, #loginForm {
     display: flex;
@@ -271,6 +277,40 @@ table th {
     color: #0056b3;
     margin-bottom: 10px;
 }
+#aboutusContent {
+    background: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-top: 20px;
+    max-width: 800px; /* Adjust as per your design */
+    width: 100%;
+}
+
+#aboutusContent h2 {
+    font-size: 2em;
+    color: #0056b3;
+    margin-bottom: 10px;
+}
+
+#aboutusContent p {
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #666;
+}
+
+#aboutusContent ul {
+    list-style: disc inside;
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: #666;
+}
+
+#aboutusContent ul li {
+    margin-bottom: 10px;
+}
+
 /* Footer styling */
 footer {
     text-align: center;
