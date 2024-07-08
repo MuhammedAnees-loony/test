@@ -202,17 +202,14 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!response.ok) {
                 throw new Error(`Network response was not ok: ${response.statusText}`);
             }
-           return response.blob(); // Get the response as a Blob object
+          return response.json();
         })
-        .then(blob => {
-            var img = document.createElement('img');
-            img.src = URL.createObjectURL(blob); // Create an object URL from the Blob
+        .then(data => {
+        var mapHtml = data.map_html;
 
-            var mapContainer = document.getElementById('mapContainer');
-            mapContainer.innerHTML = ''; // Clear container before appending new image
-            mapContainer.appendChild(img); // Append the new image to mapContainer
-             
-        })
+        var mapContainer = document.getElementById('mapContainer');
+        mapContainer.innerHTML = mapHtml; // Insert the HTML content into mapContainer
+    })
         .catch(error => {
             console.error('Error fetching image:', error);
             // Display user-friendly error message
