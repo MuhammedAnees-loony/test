@@ -202,26 +202,21 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!response.ok) {
                 throw new Error(`Network response was not ok: ${response.statusText}`);
             }
-            return response.json();
+           return response.blob(); // Get the response as a Blob object
         })
-        .then(data => {
-             
-            
-            var encodedImage = data.map_image;
+        .then(blob => {
             var img = document.createElement('img');
-            img.src = 'data:image/png;base64,' + encodedImage
+            img.src = URL.createObjectURL(blob); // Create an object URL from the Blob
 
             var mapContainer = document.getElementById('mapContainer');
             mapContainer.innerHTML = ''; // Clear container before appending new image
             mapContainer.appendChild(img); // Append the new image to mapContainer
-           
+             
         })
         .catch(error => {
-            console.error('Error plotting journey:', error);
-            console.error('Error details:', error.message);
-            console.error('Stack trace:', error.stack);
+            console.error('Error fetching image:', error);
             // Display user-friendly error message
-            alert('There was an error plotting the journey. Please try again later.');
+            alert('There was an error fetching the image. Please try again later.');
         });
     });
 });
