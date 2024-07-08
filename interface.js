@@ -269,5 +269,7 @@ document.getElementById('registerLink').addEventListener('click', function(event
 });
 
 // Fetch user data on page load
-fetchUserData();
-enableTabs();
+window.onload = function() {
+    fetchUserData();
+    enableTabs();
+};
