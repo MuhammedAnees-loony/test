@@ -417,3 +417,14 @@ footer p {
     height: 400px; /* Adjust height as needed */
 }
 
+/* Cubes Hosting */
+.container {
+    display: flex;
+}
+
+.element {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #000;
+    margin: 5px;
+}
