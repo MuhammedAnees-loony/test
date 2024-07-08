@@ -128,6 +128,7 @@ function enableTabs() {
         if (isLoggedIn) {
             hideIntroduction();
             hideGpsTollSystem();
+            displayJourneyData();
             showUserProfile();
             showStatusContent();
             hideAboutusContent();
