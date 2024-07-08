@@ -205,11 +205,13 @@ document.addEventListener('DOMContentLoaded', function () {
             return response.json();
         })
         .then(data => {
-             const img = document.createElement('img');
-            img.src = data.map_image;
-            img.alt = 'Journey Map';
-            mapContainer.innerHTML = '';
-            mapContainer.appendChild(img);
+             
+            
+            var encodedImage = data.map_image;
+            var img = document.createElement('img');
+            img.src = 'data:image/png;base64,' + encodedImage
+            document.getElementById('mapContainer').appendChild(img);
+           
         })
         .catch(error => {
             console.error('Error plotting journey:', error);
