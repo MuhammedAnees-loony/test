@@ -210,7 +210,10 @@ document.addEventListener('DOMContentLoaded', function () {
             var encodedImage = data.map_image;
             var img = document.createElement('img');
             img.src = 'data:image/png;base64,' + encodedImage
-            document.getElementById('mapContainer').appendChild(img);
+
+            var mapContainer = document.getElementById('mapContainer');
+            mapContainer.innerHTML = ''; // Clear container before appending new image
+            mapContainer.appendChild(img); // Append the new image to mapContainer
            
         })
         .catch(error => {
