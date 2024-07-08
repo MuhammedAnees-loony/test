@@ -207,8 +207,14 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(data => {
         var mapHtml = data.map_html;
 
-        var mapContainer = document.getElementById('mapContainer');
-        mapContainer.innerHTML = mapHtml; // Insert the HTML content into mapContainer
+        // Create an iframe element to load the map HTML
+        var iframe = document.createElement('iframe');
+        iframe.style.width = '100%';
+        iframe.style.height = '600px';
+        iframe.style.border = 'none';
+        iframe.srcdoc = mapHtml; // Embed the map HTML directly into the iframe
+
+        mapContainer.appendChild(iframe); // Append the iframe to mapContainer
     })
         .catch(error => {
             console.error('Error fetching image:', error);
