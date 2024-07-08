@@ -205,23 +205,16 @@ document.addEventListener('DOMContentLoaded', function () {
             return response.json();
         })
         .then(data => {
-            // Replace the mapContainer content with the fetched map HTML
-            mapContainer.innerHTML = data.map_html;
+             const img = document.createElement('img');
+            img.src = data.map_image;
+            img.alt = 'Journey Map';
+            mapContainer.innerHTML = '';
+            mapContainer.appendChild(img);
         })
         .catch(error => {
             console.error('Error plotting journey:', error);
             console.error('Error details:', error.message);
             console.error('Stack trace:', error.stack);
-
-            // Additional logging for debugging
-            console.error('Fetch error details:');
-            console.error('URL:', 'http://127.0.0.1:5000/plot_map');
-            console.error('Method:', 'POST');
-            console.error('Headers:', {
-                'Content-Type': 'application/json'
-            });
-            console.error('Body:', JSON.stringify({}));
-            
             // Display user-friendly error message
             alert('There was an error plotting the journey. Please try again later.');
         });
