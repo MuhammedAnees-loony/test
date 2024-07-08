@@ -22,7 +22,6 @@ function fetchUserData() {
         })
         .catch(error => console.error('Error fetching user data:', error));
 }
-
 // Function to parse CSV text into JSON
 function parseCSV(data) {
     const lines = data.split('\n').filter(line => line.trim() !== '');
@@ -38,10 +37,8 @@ function parseCSV(data) {
         }
         result.push(obj);
     }
-
     return result;
 }
-
 // Function to handle login
 function handleLogin(event) {
     event.preventDefault();
@@ -102,10 +99,6 @@ function fetchJourneyData(vehicleId) {
 // Now you have two arrays: distances and fees
             console.log("Distances:", distances);
             console.log("Fees:", fees);
-          
-            
-        
-  
     })
     .catch(error => {
         console.error('Error making POST request to Flask API:', error);
