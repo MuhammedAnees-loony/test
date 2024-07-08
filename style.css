@@ -145,47 +145,6 @@ form input[type="submit"] {
 form input[type="submit"]:hover {
     background: #004080;
 }
-
-/* Key features section */
-#keyFeatures {
-    display: none;
-    margin-top: 20px;
-    padding: 20px;
-    background-color: #f5f5f5;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    font-size: 1em;
-}
-
-#keyFeatures h2 {
-    font-size: 2em;
-    color: #1b3299e3;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #4196f7;
-    padding-bottom: 10px;
-    line-height: 1.2;
-}
-
-#keyFeatures ul li:before {
-    content: "\2022";
-    color: #5cb85c;
-    font-weight: bold;
-    display: inline-block;
-    width: 1em;
-    margin-left: -1em;
-}
-
-#keyFeatures ul {
-    list-style-type: none;
-    padding-left: 1.5em;
-}
-
-#keyFeatures ul li {
-    margin-bottom: 10px;
-    line-height: 1.5;
-}
-
 /* Journey details table styling */
 table {
     width: 100%;
@@ -207,8 +166,7 @@ table th {
 /* Adjust visibility and styling based on JavaScript interactions */
 #userProfile.active,
 #statusContent.active,
-#aboutusContent.active,
-#keyFeatures.active {
+#aboutusContent.active, {
     display: block; /* Display user profile, status content, and key features when active */
 }
 
@@ -310,7 +268,86 @@ table th {
 #aboutusContent ul li {
     margin-bottom: 10px;
 }
+/* Navbar integration */
+#container {
+    width: 80%;
+    margin: 0 auto;
+}
 
+#navbar {
+    background-color: #333;
+    overflow: hidden;
+}
+
+#navbar ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+#navbar ul li {
+    float: left;
+}
+
+#navbar ul li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#navbar ul li a:hover {
+    background-color: #575757;
+}
+
+#content {
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+.tab {
+    display: none;
+}
+
+.tab h2 {
+    color: #333;
+}
+
+.tab p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.tab ul {
+    list-style-type: disc;
+    padding-left: 20px;
+}
+
+.tab ul li {
+    color: #666;
+    line-height: 1.6;
+}
+
+#about img {
+    display: block;
+    margin: 20px auto;
+}
+
+#about ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+#about ul li {
+    background: #e7f3ff;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #d4e6fc;
+    border-radius: 5px;
+}
 /* Footer styling */
 footer {
     text-align: center;
