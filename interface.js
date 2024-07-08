@@ -109,7 +109,6 @@ function fetchJourneyData(vehicleId) {
 function enableTabs() {
     document.getElementById('statusTab').classList.remove('disabled');
     document.getElementById('aboutusTab').classList.remove('disabled');
-
     // Event listeners for tabs
    document.getElementById('statusTab').addEventListener('click', function() {
         showStatusContent();
@@ -167,7 +166,7 @@ function showMainContent() {
 // Function to hide status and about us content
 function hideStatusAndAboutusContent() {
     document.getElementById('statusContent').style.display = 'none';
-    // Add any additional sections to hide if needed
+    document.getElementById('aboutusContent').style.display = 'none';
 }
 // Event listener for login form submission
 document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
@@ -195,16 +194,15 @@ function showUserProfile(user) {
 // Function to show status content
 function showStatusContent() {
     document.getElementById('statusContent').style.display = 'block';
+    document.getElementById('aboutusContent').style.display = 'none';
     displayJourneyData(); // Display journey data in the table
 }
 
 // Function to show about us content
 function showAboutusContent() {
     document.getElementById('statusContent').style.display = 'none';
+    document.getElementById('aboutusContent').style.display = 'block';
 }
-
-// Function to display journey data
-// Function to display journey data
 
 // Function to display journey data
 function displayJourneyData() {
@@ -240,10 +238,6 @@ function displayJourneyData() {
         console.error('Fees or distances array is not valid or is empty.');
     }
 }
-
-
-
-
 // Event listener for login form submission
 document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
 
