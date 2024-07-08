@@ -186,7 +186,6 @@ document.getElementById('registerFormElem').addEventListener('submit', function(
         return;
     }
 });
-
 document.addEventListener('DOMContentLoaded', function () {
     const plotButton = document.getElementById('plotButton');
     const mapContainer = document.getElementById('mapContainer');
@@ -201,7 +200,7 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(response => {
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error(`Network response was not ok: ${response.statusText}`);
             }
             return response.json();
         })
@@ -211,7 +210,20 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => {
             console.error('Error plotting journey:', error);
-            // Handle error scenario if needed
+            console.error('Error details:', error.message);
+            console.error('Stack trace:', error.stack);
+
+            // Additional logging for debugging
+            console.error('Fetch error details:');
+            console.error('URL:', 'http://127.0.0.1:5000/plot_map');
+            console.error('Method:', 'POST');
+            console.error('Headers:', {
+                'Content-Type': 'application/json'
+            });
+            console.error('Body:', JSON.stringify({}));
+            
+            // Display user-friendly error message
+            alert('There was an error plotting the journey. Please try again later.');
         });
     });
 });
@@ -225,8 +237,6 @@ function showUserProfile(user) {
     document.getElementById('profileGpsId').textContent = user.gpsId;
     document.getElementById('userProfile').style.display = 'block';
 }
-
-
 
 // Function to display journey data
 function displayJourneyData() {
