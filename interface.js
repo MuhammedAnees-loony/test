@@ -129,7 +129,6 @@ function enableTabs() {
             hideIntroduction();
             hideGpsTollSystem();
             displayJourneyData();
-            showUserProfile();
             showStatusContent();
             hideAboutusContent();
         } else {
