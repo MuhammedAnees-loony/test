@@ -204,8 +204,8 @@ function displayJourneyData() {
             const feeCell = document.getElementById(`j${journeyNumber}-fees`);
 
             if (distanceCell && feeCell) {
-                distanceCell.textContent = `${distance.toFixed(2)} km`;
-                feeCell.textContent = `$${fee.toFixed(2)}`;
+                distanceCell.textContent = `${distance.toFixed(2)} m`;
+                feeCell.textContent = `Rs${fee.toFixed(2)}`;
             }
         });
 
@@ -217,8 +217,8 @@ function displayJourneyData() {
         const totalDistance = distances.reduce((acc, curr) => acc + parseFloat(curr), 0).toFixed(2);
         const totalToll = fees.reduce((acc, curr) => acc + parseFloat(curr), 0).toFixed(2);
 
-        document.getElementById('totalDistance').textContent = `${totalDistance} km`;
-        document.getElementById('totalToll').textContent = `$${totalToll}`;
+        document.getElementById('totalDistance').textContent = `${totalDistance} m`;
+        document.getElementById('totalToll').textContent = `Rs${totalToll}`;
 
     } else {
         console.error('Fees or distances array is not valid or is empty.');
