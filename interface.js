@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     plotButton.addEventListener('click', function () {
         fetch('http://127.0.0.1:5000/plot_map', { // Use apiUrl instead of '/plot_map'
-            method: 'OPTIONS',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
