@@ -5,7 +5,7 @@ import pandas as pd
 from datetime import datetime, time
 
 # Load the trained model
-model = joblib.load("06_07_lgbm_model.sav")
+model = joblib.load("streamlit/06_07_lgbm_model.sav")
 
 st.title('GPS BASED TOLL COLLECTION')
 st.markdown('A test model created for calculating the fees according to the distance travelled.')
