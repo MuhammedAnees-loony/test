@@ -418,13 +418,23 @@ footer p {
 }
 
 /* Cubes Hosting */
-.container {
+.ch-container {
     display: flex;
 }
 
-.element {
+.ch-element {
     flex: 1;
     padding: 10px;
     border: 1px solid #000;
     margin: 5px;
+}
+
+.ch-link {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.ch-link:hover {
+    color: #3aaa4f;
 }
