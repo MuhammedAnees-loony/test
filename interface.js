@@ -39,6 +39,27 @@ function parseCSV(data) {
     }
     return result;
 }
+// Wait for the document to load
+document.addEventListener('DOMContentLoaded', function() {
+    // Find the Pay button element
+    var payButton = document.getElementById('payButton');
+    
+    // Add click event listener to the Pay button
+    payButton.addEventListener('click', function() {
+        // Here you can implement the payment logic
+        // For example, you can redirect to a payment gateway or perform an AJAX request
+        
+        // Replace this with your payment handling logic
+        alert('Redirecting to payment gateway...');
+        
+        // For demonstration purposes, let's simulate a payment success after 2 seconds
+        setTimeout(function() {
+            alert('Payment successful!');
+            // You can add further actions here, such as updating UI or navigating to another page
+        }, 2000); // 2000 milliseconds = 2 seconds
+    });
+});
+
 // Function to handle login
 function handleLogin(event) {
     event.preventDefault();
