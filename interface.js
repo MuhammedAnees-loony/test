@@ -154,7 +154,21 @@ function enableTabs() {
         registerForm.style.display = 'none';
     } 
 }
+// Function to hide the main content
+function hideMainContent() {
+    document.querySelector('.main-content').style.display = 'none';
+}
 
+// Function to show the main content
+function showMainContent() {
+    document.querySelector('.main-content').style.display = 'block';
+}
+
+// Function to hide status and about us content
+function hideStatusAndAboutusContent() {
+    document.getElementById('statusContent').style.display = 'none';
+    // Add any additional sections to hide if needed
+}
 // Event listener for login form submission
 document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
 
