@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         // Create an iframe element to load the map HTML
         var iframe = document.createElement('iframe');
-        iframe.style.width = '330px';
+        iframe.style.width = '100%';
         iframe.style.height = '400px';
         iframe.style.border = 'none';
         iframe.srcdoc = mapHtml; // Embed the map HTML directly into the iframe
