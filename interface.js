@@ -187,6 +187,35 @@ document.getElementById('registerFormElem').addEventListener('submit', function(
     }
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const plotButton = document.getElementById('plotButton');
+    const mapContainer = document.getElementById('mapContainer');
+
+    plotButton.addEventListener('click', function () {
+        fetch('http://127.0.0.1:5000/plot_map', { // Use apiUrl instead of '/plot_map'
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Replace the mapContainer content with the fetched map HTML
+            mapContainer.innerHTML = data.map_html;
+        })
+        .catch(error => {
+            console.error('Error plotting journey:', error);
+            // Handle error scenario if needed
+        });
+    });
+});
+
 // Function to show user profile after successful login
 function showUserProfile(user) {
     document.getElementById('profileUserId').textContent = user.userid;
