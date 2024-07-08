@@ -118,8 +118,18 @@ function enableTabs() {
     document.getElementById('aboutusTab').classList.remove('disabled');
 
     // Event listeners for tabs
-    document.getElementById('statusTab').addEventListener('click', showStatusContent);
-    document.getElementById('aboutusTab').addEventListener('click', showAboutusContent);
+   document.getElementById('statusTab').addEventListener('click', function() {
+        showStatusContent();
+        hideMainContent();
+    });
+    document.getElementById('aboutusTab').addEventListener('click', function() {
+        showAboutusContent();
+        hideMainContent();
+    });
+    document.getElementById('homeTab').addEventListener('click', function() {
+        showMainContent();
+        hideStatusAndAboutusContent();
+    });
     // Login/Register tab
     const loginTab = document.getElementById('loginTab');
     const loginForm = document.getElementById('loginForm');
@@ -149,7 +159,7 @@ function enableTabs() {
     } else {
         loginForm.style.display = 'block';
         registerForm.style.display = 'none';
-    }
+    } 
 }
 
 // Event listener for login form submission
@@ -163,7 +173,6 @@ document.getElementById('registerFormElem').addEventListener('submit', function(
         alert('Password must be at least 8 characters long and contain at least one number, one symbol, and one uppercase letter.');
         return;
     }
-    // Handle registration logic if required
 });
 
 // Function to show user profile after successful login
