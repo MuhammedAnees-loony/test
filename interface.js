@@ -108,29 +108,50 @@ function fetchJourneyData(vehicleId) {
 function enableTabs() {
     document.getElementById('statusTab').classList.remove('disabled');
     document.getElementById('aboutusTab').classList.remove('disabled');
-    // Event listeners for tabs
-   document.getElementById('statusTab').addEventListener('click', function() {
-        showStatusContent();
-        hideMainContent();
-    });
-    document.getElementById('aboutusTab').addEventListener('click', function() {
-        showAboutusContent();
-        hideMainContent();
-    });
-    document.getElementById('homeTab').addEventListener('click', function() {
-        showMainContent();
-        hideStatusAndAboutusContent();
-    });
+   const homeTab = document.getElementById('homeTab');
+    const statusTab = document.getElementById('statusTab');
+    const aboutusTab = document.getElementById('aboutusTab');
+    
     // Login/Register tab
     const loginTab = document.getElementById('loginTab');
     const loginForm = document.getElementById('loginForm');
     const registerForm = document.getElementById('registerForm');
+
+     homeTab.addEventListener('click', function () {
+        showIntroduction();
+        showGpsTollSystem();
+        hideStatusContent();
+        hideAboutusContent();
+    });
+
+    statusTab.addEventListener('click', function () {
+        if (isLoggedIn) {
+            hideIntroduction();
+            hideGpsTollSystem();
+            showUserProfile();
+            showStatusContent();
+            hideAboutusContent();
+        } else {
+            alert('Please log in to view status.');
+        }
+    });
+
+    aboutusTab.addEventListener('click', function () {
+        hideIntroduction();
+        hideGpsTollSystem();
+        hideStatusContent();
+        showAboutusContent();
+    });
     
     loginTab.addEventListener('click', function() {
         loginForm.style.display = 'block';
         registerForm.style.display = 'none';
         document.getElementById('userProfile').style.display = 'none';
         document.getElementById('statusContent').style.display = 'none';
+        hideStatusContent();
+        hideAboutusContent();
+        showIntroduction();
+        showGpsTollSystem();
     });
     
     // Registration form link
@@ -152,21 +173,7 @@ function enableTabs() {
         registerForm.style.display = 'none';
     } 
 }
-// Function to hide the main content
-function hideMainContent() {
-    document.querySelector('.main-content').style.display = 'none';
-}
 
-// Function to show the main content
-function showMainContent() {
-    document.querySelector('.main-content').style.display = 'block';
-}
-
-// Function to hide status and about us content
-function hideStatusAndAboutusContent() {
-    document.getElementById('statusContent').style.display = 'none';
-    document.getElementById('aboutusContent').style.display = 'none';
-}
 // Event listener for login form submission
 document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
 
@@ -190,18 +197,7 @@ function showUserProfile(user) {
     document.getElementById('userProfile').style.display = 'block';
 }
 
-// Function to show status content
-function showStatusContent() {
-    document.getElementById('statusContent').style.display = 'block';
-    document.getElementById('aboutusContent').style.display = 'none';
-    displayJourneyData(); // Display journey data in the table
-}
 
-// Function to show about us content
-function showAboutusContent() {
-    document.getElementById('statusContent').style.display = 'none';
-    document.getElementById('aboutusContent').style.display = 'block';
-}
 
 // Function to display journey data
 function displayJourneyData() {
@@ -250,7 +246,36 @@ document.getElementById('registerFormElem').addEventListener('submit', function(
     }
     // Handle registration logic if required
 });
+// Function to show the status content
+function showStatusContent() {
+    document.getElementById('statusContent').style.display = 'block';
+}
+// Function to hide the status content
+function hideStatusContent() {
+    document.getElementById('statusContent').style.display = 'none';
+}
+function showAboutusContent() {
+    document.getElementById('aboutusContent').style.display = 'block';
+}
+// Function to hide the about us content
+function hideAboutusContent() {
+    document.getElementById('aboutusContent').style.display = 'none';
+}
+function showIntroduction() {
+    document.getElementById('introduction').style.display = 'block';
+}
 
+function hideIntroduction() {
+    document.getElementById('introduction').style.display = 'none';
+}
+
+function showGpsTollSystem() {
+    document.getElementById('gpsTollSystem').style.display = 'block';
+}
+
+function hideGpsTollSystem() {
+    document.getElementById('gpsTollSystem').style.display = 'none';
+}
 // Function to validate password based on the given criteria
 function validatePassword(password) {
     const minLength = 8;
@@ -269,7 +294,5 @@ document.getElementById('registerLink').addEventListener('click', function(event
 });
 
 // Fetch user data on page load
-window.onload = function() {
-    fetchUserData();
-    enableTabs();
-};
+fetchUserData();
+enableTabs();
