@@ -359,3 +359,29 @@ footer {
     left: 0;
     width: 100%;
 }
+footer p {
+    margin: 5px 0;
+}
+
+.team-links {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.team-links li {
+    display: inline;
+}
+
+.team-links a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.team-links a:hover {
+    color: #0077b5; /* LinkedIn blue */
+}
