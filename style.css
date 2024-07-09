@@ -1,3 +1,4 @@
+
 /* Reset and basic styling */
 body {
     font-family: Arial, sans-serif;
@@ -204,7 +205,8 @@ table th {
     width: 100%;
 }
 #userProfile {
-    display: none;
+    display: flex;
+    justify-content: flex-start;
     background: #f9f9f9;
     padding: 20px;
     border: 1px solid #ddd;
@@ -213,6 +215,8 @@ table th {
     margin-top: 20px;
     max-width: 400px;
     width: 100%;
+    margin-right: 0;
+    margin-left: auto;
 }
 
 #userProfile p {
@@ -228,7 +232,9 @@ table th {
     margin-top: 20px;
     max-width: 400px;
     width: 100%;
+    margin-bottom: auto;
 }
+
 
 #statusContent h2 {
     font-size: 2em; /* Adjusted font size */
@@ -415,6 +421,39 @@ footer p {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     height: 400px; /* Adjust height as needed */
+}
+#paymentContainer {
+    margin-top: 20px;
+    padding: 20px;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+#payButton {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+#payButton:hover {
+    background-color: #0056b3;
+}
+
+#qrCodeContainer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#qrCodeContainer img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 10px;
 }
 
 /* Cubes Hosting */

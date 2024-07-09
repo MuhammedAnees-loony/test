@@ -39,6 +39,27 @@ function parseCSV(data) {
     }
     return result;
 }
+// Wait for the document to load
+document.addEventListener('DOMContentLoaded', function() {
+    // Find the Pay button element
+    var payButton = document.getElementById('payButton');
+    
+    // Add click event listener to the Pay button
+    payButton.addEventListener('click', function() {
+        // Here you can implement the payment logic
+        // For example, you can redirect to a payment gateway or perform an AJAX request
+        
+        // Replace this with your payment handling logic
+        alert('Redirecting to payment gateway...');
+        
+        // For demonstration purposes, let's simulate a payment success after 2 seconds
+        setTimeout(function() {
+            alert('Payment successful!');
+            // You can add further actions here, such as updating UI or navigating to another page
+        }, 2000); // 2000 milliseconds = 2 seconds
+    });
+});
+
 // Function to handle login
 function handleLogin(event) {
     event.preventDefault();
@@ -202,26 +223,24 @@ document.addEventListener('DOMContentLoaded', function () {
             if (!response.ok) {
                 throw new Error(`Network response was not ok: ${response.statusText}`);
             }
-            return response.json();
+          return response.json();
         })
         .then(data => {
-             
-            
-            var encodedImage = data.map_image;
-            var img = document.createElement('img');
-            img.src = 'data:image/png;base64,' + encodedImage
+        var mapHtml = data.map_html;
 
-            var mapContainer = document.getElementById('mapContainer');
-            mapContainer.innerHTML = ''; // Clear container before appending new image
-            mapContainer.appendChild(img); // Append the new image to mapContainer
-           
-        })
+        // Create an iframe element to load the map HTML
+        var iframe = document.createElement('iframe');
+        iframe.style.width = '100%';
+        iframe.style.height = '400px';
+        iframe.style.border = 'none';
+        iframe.srcdoc = mapHtml; // Embed the map HTML directly into the iframe
+
+        mapContainer.appendChild(iframe); // Append the iframe to mapContainer
+    })
         .catch(error => {
-            console.error('Error plotting journey:', error);
-            console.error('Error details:', error.message);
-            console.error('Stack trace:', error.stack);
+            console.error('Error fetching image:', error);
             // Display user-friendly error message
-            alert('There was an error plotting the journey. Please try again later.');
+            alert('There was an error fetching the image. Please try again later.');
         });
     });
 });
