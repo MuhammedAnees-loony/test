@@ -60,6 +60,66 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Function to fetch and parse CSV data
+async function fetchUserAdminData() {
+    const response = await fetch('login.csv');
+    const data = await response.text();
+
+    // Parse CSV data
+    const userData = parseCSV(data);
+
+    // Populate user table with parsed data
+    populateUserAdminTable(userData);
+}
+
+// Function to parse CSV data
+function parseAdminCSV(csv) {
+    // Split CSV into rows
+    const rows = csv.split('\n');
+
+    // Extract headers (first row)
+    const headers = rows[0].split(',');
+
+    // Initialize array to store parsed data
+    const userData = [];
+
+    // Loop through rows (starting from second row)
+    for (let i = 1; i < rows.length; i++) {
+        // Split row into columns
+        const columns = rows[i].split(',');
+
+        // Create object with userId and vehicleId
+        const user = {
+            userId: columns[0].trim(),     // Assuming userId is the first column
+            vehicleId: columns[1].trim()   // Assuming vehicleId is the second column
+        };
+
+        // Push object into userData array
+        userData.push(user);
+    }
+
+    return userData;
+}
+
+// Function to populate the user table
+function populateUserAdminTable(userData) {
+    const tbody = document.querySelector('#userTable tbody');
+
+    // Clear existing rows
+    tbody.innerHTML = '';
+
+    // Populate table with data
+    userData.forEach(user => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${user.userId}</td>
+            <td>${user.vehicleId}</td>
+        `;
+        tbody.appendChild(row);
+    });
+    fetchUserAdminData();
+}
+
 // Function to handle login
 function handleLogin(event) {
     event.preventDefault();
