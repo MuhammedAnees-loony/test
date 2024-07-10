@@ -73,9 +73,13 @@ function handleLogin(event) {
         loggedInUser = user; // Store the logged-in user's data
         document.getElementById('loginForm').style.display = 'none';
         document.getElementById('registerForm').style.display = 'none';
-        enableTabs();
-        showUserProfile(user); // Display user profile details
-        fetchJourneyData(user.vehicleId); // Fetch journey data after successful login
+       if (user.isAdmin === 'true') {
+            showAdminInterface();
+        } else {
+            enableTabs();
+            showUserProfile(user);
+            fetchJourneyData(user.vehicleId);
+        }
     } else {
         alert('Invalid username or password');
     }
@@ -107,8 +111,6 @@ function fetchJourneyData(vehicleId) {
     .then(data => {
         console.log('Journey data fetched successfully:', data);
             let jsonObject = JSON.parse(data);
-
-// Initialize arrays to store distances and fees
            
 // Loop through the JSON object and extract values
             jsonObject.forEach(item => {
@@ -124,7 +126,35 @@ function fetchJourneyData(vehicleId) {
         console.error('Error making POST request to Flask API:', error);
     });
 }
+// Function to show admin interface
+function showAdminInterface() {
+    document.getElementById('adminInterface').style.display = 'block';
+    const userTable = document.getElementById('userTable');
+    userTable.innerHTML = '';
 
+    // Show the first 15 users
+    for (let i = 0; i < Math.min(users.length, 15); i++) {
+        const user = users[i];
+        const row = userTable.insertRow();
+        const cell1 = row.insertCell(0);
+        const cell2 = row.insertCell(1);
+        cell1.textContent = user.userid;
+        cell2.textContent = user.vehicleId;
+    }
+}
+// Function to handle admin search for journey details
+function handleAdminSearch(event) {
+    event.preventDefault();
+    const vehicleId = document.getElementById('searchVehicleId').value;
+    const user = users.find(user => user.vehicleId === vehicleId);
+
+    if (user) {
+        fetchJourneyData(vehicleId);
+        displayJourneyData();
+    } else {
+        alert('Vehicle ID not found');
+    }
+}
 // Function to enable status and about us tabs
 function enableTabs() {
     document.getElementById('statusTab').classList.remove('disabled');
