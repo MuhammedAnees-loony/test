@@ -18,6 +18,7 @@ function fetchUserData() {
     fetch(userCsvPath)
         .then(response => response.text())
         .then(data => {
+            console.log('haii');
             users = parseCSV(data);
             console.log('User data fetched:', users);  // Log the fetched user data for debugging
         })
