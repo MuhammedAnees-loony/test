@@ -1,187 +1,355 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GPS Based Toll Collection</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <nav>
-            <ul>
-                <li><a href="#" id="homeTab">Home</a></li>
-                <li><a href="#" id="statusTab" class="disabled">Status</a></li>
-                <li><a href="#" id="aboutusTab" class="disabled">About us</a></li>
-                <li><a href="#" id="loginTab">Login/Register</a></li>
-            </ul>
-        </nav>
-        <header>
-            <h1>GPS BASED TOLL COLLECTION</h1>
-            <p>A test model created for calculating the fees according to the distance travelled.</p>
-        </header>
 
-        <div class="main-content">
-            <!--Introduction Sections -->
-            <section id="introduction">
-                <h2>Introduction to GPS Toll-Based Simulation Using Python</h2>
-                <p>Welcome to the GPS Toll-Based System Simulation homepage! This project is designed to provide an innovative and efficient way to manage toll collection using GPS technology. Our simulation uses Python to build a robust and scalable system that can be easily adapted for real-world application.</p>
-            </section>
+// Variable to store parsed CSV data
+let users = [];
+// Flag to track login status
+let isLoggedIn = false;
+// Variable to store the logged-in user's data
+let loggedInUser = null;
+// Variable to store fetched journey data
+let journeyData = [];
+let distances = [];
+let fees = [];
 
-            <!-- What is GPS Toll Based System Section-->
-            <section id="gpsTollSystem">
-                <h2>What is GPS Toll-Based System?</h2>
-                <p>The GPS Toll-Based System is a modern approach to toll collection that utilizes GPS data to determine the distance travelled by a vehicle and calculate the toll fee accordingly. This system eliminates the need for traditional toll booths, reducing traffic congestion and improving the overall efficiency of toll operations.</p>
-            </section>
-            <!-- User Profile and Journey Details Section -->
-            <div id="userProfile" class="user-profile" style="display: none;">
-                <h2>User Profile</h2>
-                <p><strong>User ID:</strong> <span id="profileUserId"></span></p>
-                <p><strong>Username:</strong> <span id="profileUserName"></span></p>
-                <p><strong>Vehicle ID:</strong> <span id="profileVehicleId"></span></p>
-                <p><strong>Vehicle Type:</strong> <span id="profileVehicleType"></span></p>
-                <p><strong>GPS ID:</strong> <span id="profileGpsId"></span></p>
-            </div>
+// Function to fetch user data from the GitHub repository
+function fetchUserData() {
+    const userCsvPath = 'https://raw.githubusercontent.com/MuhammedAnees-loony/test/main/login.csv';  // GitHub URL for user data
 
-            <!-- Status Content -->
-            <div id="statusContent" style="display: none;">
-                <h2>Payment Details</h2>
-                <p><strong>Total Distance:</strong> <span id="totalDistance"></span></p>
-                <p><strong>Total Toll:</strong> <span id="totalToll"></span></p>
-                <h2>Journey Details</h2>
-                <table id="journeyTable">
-                    <thead>
-                        <tr>
-                            <th>Journey</th>
-                            <th>Distance (m)</th>
-                            <th>Fees (Rs)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="journeyTableBody">
-                        <!-- Rows will be dynamically added here -->
-                        <tr>
-                            <td>Journey 1</td>
-                            <td id="j1-distance">--</td>
-                            <td id="j1-fees">--</td>
-                        </tr>
-                        <tr>
-                            <td>Journey 2</td>
-                            <td id="j2-distance">--</td>
-                            <td id="j2-fees">--</td>
-                        </tr>
-                        <tr>
-                            <td>Journey 3</td>
-                            <td id="j3-distance">--</td>
-                            <td id="j3-fees">--</td>
-                        </tr>
-                        <tr>
-                            <td>Journey 4</td>
-                            <td id="j4-distance">--</td>
-                            <td id="j4-fees">--</td>
-                        </tr>
-                        <tr>
-                            <td>Journey 5</td>
-                            <td id="j5-distance">--</td>
-                            <td id="j5-fees">--</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div id="plotButtonContainer" action="#" method="OPTIONS">
-                     <button id="plotButton">Display Latest Journey</button>
-                </div>
+    fetch(userCsvPath)
+        .then(response => response.text())
+        .then(data => {
+            users = parseCSV(data);
+            console.log('User data fetched:', users);  // Log the fetched user data for debugging
+        })
+        .catch(error => console.error('Error fetching user data:', error));
+}
+// Function to parse CSV text into JSON
+function parseCSV(data) {
+    const lines = data.split('\n').filter(line => line.trim() !== '');
+    const headers = lines[0].split(',');
+    const result = [];
 
-                <div id="mapContainer">
-                     <!-- map Content -->
-                </div>
-                <div id="paymentContainer">
-                    <button id="payButton">Pay Now</button>
-                         <div id="qrCodeContainer">
-                            <img src="qr.jpg" alt="QR Code for Payment">
-                            <p>Scan the QR code to make payment</p>
-                         </div>
-                 </div>
-            </div>
-            <!-- About Us Content -->
-            <div id="aboutusContent" style="display: none;">
-                <h2>About Us</h2>
-                <p>Welcome to the GPS Based Toll Collection System project. Our mission is to revolutionize toll collection through the use of cutting-edge GPS technology.</p>
-                <p>Our team consists of engineering students who are passionate about creating efficient and user-friendly systems.</p>
-                <p>We believe in continuous innovation and improvement to meet the evolving needs of transportation infrastructure. Join us on this journey to make toll collection faster, more efficient, and more accurate.</p>
-                <p>For more information, please contact us at <a href="mailto:manees.csb2226@saintgits.org mathewsr.csb2226@saintgits.org navyap.csb2226@saintgits.org shalinat.csb2226@saintgits.org neerajas.csb2226@saintgits.org">support@gpstollcollection.com</a>.</p>
-                <p> Our website is hosted on a reliable and secure server infrastructure provided by Cubes.</p>
-                <img src="Logo-Green-Gray.png" alt="Cubes Logo" style="width:400px;">
-                <p>Our server is equipped with the following specifications:</p>
-                <div class="ch-container">
-                    <div class="ch-element">
-                        <p>Frontend (Website)</p>
-                        <ul>
-                            <li>CPU: Intel® Xeon® E3-1270 v6 @ 3.80Ghz</li>
-                            <li>RAM: 4x 16 GB DDR4 ECC</li>
-                            <li>Storage: 2x 450GB SSD NVMe Soft RAID</li>
-                            <li>Network: 1Gbit Down / 250Mbps Up Link</li>
-                            <li>OS: Ubuntu 20.04 LTS</li>
-                        </ul>
-                    </div>
-                    <div class="ch-element">
-                        <p>Backend (Python Machine Learning Model)</p>
-                        <ul>
-                            <li>CPU: Intel® Xeon® E5-1650 v3 @ 3.80GHz</li>
-                            <li>RAM: 8x 32 GB DDR4 ECC</li>
-                            <li>Storage: 2x 480 GB SSD</li>
-                            <li>Network: NIC 1Gbit (Intel I210)</li>
-                            <li>OS: Ubuntu 20.04 LTS</li>
-                        </ul>
-                </div>
-            </div>
-            </div>
-            <!-- Login form -->
-            <div id="loginForm">
-                <form id="loginFormElem" action="#" method="POST">
-                    <label for="username">Username:</label><br>
-                    <input type="text" id="username" name="username" required><br><br>
-                    <label for="password">Password:</label><br>
-                    <input type="password" id="password" name="password" required><br><br>
-                    <input type="submit" value="Login">
-                </form>
-                <p>Don't have an account? <a href="#" id="registerLink">Create new account</a></p>
-            </div>
+    for (let i = 1; i < lines.length; i++) {
+        const obj = {};
+        const currentLine = lines[i].split(',');
 
-            <!-- Registration form -->
-            <div id="registerForm" style="display: none;">
-                <form id="registerFormElem" action="#" method="POST">
-                    <label for="newUsername">New Username:</label><br>
-                    <input type="text" id="newUsername" name="newUsername" required><br><br>
-                    <label for="newPassword">New Password:</label><br>
-                    <input type="password" id="newPassword" name="newPassword" required><br>
-                    <small>Password must be at least 8 characters long and contain at least one number, one symbol, and one uppercase letter.</small><br><br>
-                    <label for="newVehicleId">Vehicle ID (Format: V followed by 3 digits):</label><br>
-                    <input type="text" id="newVehicleId" name="newVehicleId" pattern="V\d{3}" required><br>
-                    <small>Example: V123</small><br><br>
-                    <label for="newVehicleType">Vehicle Type (Format: H, M, T, or S):</label><br>
-                    <input type="text" id="newVehicleType" name="newVehicleType" pattern="[HMTS]" required><br>
-                    <small>Example: H, M, T, or S</small><br><br>
-                    <label for="newGpsId">GPS ID (Format: G followed by 3 digits):</label><br>
-                    <input type="text" id="newGpsId" name="newGpsId" pattern="G\d{3}" required><br>
-                    <small>Example: G123</small><br><br>
-                    <label for="newUserId">User ID (Format: CC- followed by 3 digits):</label><br>
-                    <input type="text" id="newUserId" name="newUserId" pattern="CC-\d{3}" required><br>
-                    <small>Example: CC-123</small><br><br>
-                    <input type="submit" value="Register">
-                </form>
-            </div>
-        </div>
-        <footer>
-            <p>&copy; 2024 GPS Based Toll Collection System. All rights reserved. Powered by <a class="ch-link" href="https://cubes.host/" target="_blank"> Cubes Hosting</a></p>
-                <ul class="team-links">
-                     <li><a href="https://www.linkedin.com/in/muhammed-anees-18b225318/" target="_blank">Muhammed Anees</a></li>
-                    <li><a href="https://www.linkedin.com/in/mathews-reji-9870b0290/" target="_blank">Mathews Reji</a></li>
-                    <li><a href="https://www.linkedin.com/in/navya-prasad-009a25298/" target="_blank">Navya Prasad</a></li>
-                    <li><a href="https://www.linkedin.com/in/ishalinat/" target="_blank">Shalin Ann Thomas</a></li>
-                    <li><a href="https://www.linkedin.com/in/neeraja-s-898522255/" target="_blank">Neeraja S</a></li>
-                </ul>
-        </footer>
-    </div>
-    <script src="interface.js"></script>
-</body>
-</html>
+        for (let j = 0; j < headers.length; j++) {
+            obj[headers[j].trim()] = currentLine[j].trim();
+        }
+        result.push(obj);
+    }
+    return result;
+}
+// Wait for the document to load
+document.addEventListener('DOMContentLoaded', function() {
+    // Find the Pay button element
+    var payButton = document.getElementById('payButton');
+    
+    // Add click event listener to the Pay button
+    payButton.addEventListener('click', function() {
+        // Here you can implement the payment logic
+        // For example, you can redirect to a payment gateway or perform an AJAX request
+        
+        // Replace this with your payment handling logic
+        alert('Redirecting to payment gateway...');
+        
+        // For demonstration purposes, let's simulate a payment success after 2 seconds
+        setTimeout(function() {
+            alert('Payment successful!');
+            // You can add further actions here, such as updating UI or navigating to another page
+        }, 2000); // 2000 milliseconds = 2 seconds
+    });
+});
+
+// Function to handle login
+function handleLogin(event) {
+    event.preventDefault();
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    // Check if the provided username and password match any user in the array
+    const user = users.find(user => user.username === username && user.password === password);
+
+    if (user) {
+        isLoggedIn = true;
+        loggedInUser = user; // Store the logged-in user's data
+        document.getElementById('loginForm').style.display = 'none';
+        document.getElementById('registerForm').style.display = 'none';
+        enableTabs();
+        showUserProfile(user); // Display user profile details
+        fetchJourneyData(user.vehicleId); // Fetch journey data after successful login
+    } else {
+        alert('Invalid username or password');
+    }
+}
+
+// Function to fetch journey data
+function fetchJourneyData(vehicleId) {
+    const apiUrl = 'http://127.0.0.1:5000/predict'; // Replace with your Flask API URL
+
+    // Prepare the request body
+    const requestBody = {
+        vehicle_id: vehicleId
+    };
+
+    // Send POST request to Flask API
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json(); // Expecting JSON response
+    })
+    .then(data => {
+        console.log('Journey data fetched successfully:', data);
+            let jsonObject = JSON.parse(data);
+
+// Initialize arrays to store distances and fees
+           
+// Loop through the JSON object and extract values
+            jsonObject.forEach(item => {
+                distances.push(item.distance);
+                fees.push(item.fee);
+            });
+
+// Now you have two arrays: distances and fees
+            console.log("Distances:", distances);
+            console.log("Fees:", fees);
+    })
+    .catch(error => {
+        console.error('Error making POST request to Flask API:', error);
+    });
+}
+
+// Function to enable status and about us tabs
+function enableTabs() {
+    document.getElementById('statusTab').classList.remove('disabled');
+    document.getElementById('aboutusTab').classList.remove('disabled');
+   const homeTab = document.getElementById('homeTab');
+    const statusTab = document.getElementById('statusTab');
+    const aboutusTab = document.getElementById('aboutusTab');
+    
+    // Login/Register tab
+    const loginTab = document.getElementById('loginTab');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+
+     homeTab.addEventListener('click', function () {
+        showIntroduction();
+        showGpsTollSystem();
+        hideStatusContent();
+        hideAboutusContent();
+    });
+
+    statusTab.addEventListener('click', function () {
+        if (isLoggedIn) {
+            hideIntroduction();
+            hideGpsTollSystem();
+            displayJourneyData();
+            showStatusContent();
+            hideAboutusContent();
+        } else {
+            alert('Please log in to view status.');
+        }
+    });
+
+    aboutusTab.addEventListener('click', function () {
+        hideIntroduction();
+        hideGpsTollSystem();
+        hideStatusContent();
+        showAboutusContent();
+    });
+    
+    loginTab.addEventListener('click', function() {
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+        document.getElementById('userProfile').style.display = 'none';
+        document.getElementById('statusContent').style.display = 'none';
+        hideStatusContent();
+        hideAboutusContent();
+        showIntroduction();
+        showGpsTollSystem();
+    });
+    
+    // Registration form link
+    const registerLink = document.getElementById('registerLink');
+    registerLink.addEventListener('click', function(event) {
+        event.preventDefault();
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'block';
+        document.getElementById('userProfile').style.display = 'none';
+        document.getElementById('statusContent').style.display = 'none';
+    });
+    
+    // Default state on load
+    if (isLoggedIn) {
+        loginForm.style.display = 'none';
+        registerForm.style.display = 'none';
+    } else {
+        loginForm.style.display = 'block';
+        registerForm.style.display = 'none';
+    } 
+}
+
+// Event listener for login form submission
+document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
+
+// Event listener for register form submission
+document.getElementById('registerFormElem').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const password = document.getElementById('newPassword').value;
+    if (!validatePassword(password)) {
+        alert('Password must be at least 8 characters long and contain at least one number, one symbol, and one uppercase letter.');
+        return;
+    }
+});
+document.addEventListener('DOMContentLoaded', function () {
+    const plotButton = document.getElementById('plotButton');
+    const mapContainer = document.getElementById('mapContainer');
+
+    plotButton.addEventListener('click', function () {
+        fetch('http://127.0.0.1:5000/plot_map', { // Use apiUrl instead of '/plot_map'
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.statusText}`);
+            }
+          return response.json();
+        })
+        .then(data => {
+        var mapHtml = data.map_html;
+
+        // Create an iframe element to load the map HTML
+        var iframe = document.createElement('iframe');
+        iframe.style.width = '100%';
+        iframe.style.height = '400px';
+        iframe.style.border = 'none';
+        iframe.srcdoc = mapHtml; // Embed the map HTML directly into the iframe
+
+        mapContainer.appendChild(iframe); // Append the iframe to mapContainer
+    })
+        .catch(error => {
+            console.error('Error fetching image:', error);
+            // Display user-friendly error message
+            alert('There was an error fetching the image. Please try again later.');
+        });
+    });
+});
+
+// Function to show user profile after successful login
+function showUserProfile(user) {
+    document.getElementById('profileUserId').textContent = user.userid;
+    document.getElementById('profileUserName').textContent = user.username;
+    document.getElementById('profileVehicleId').textContent = user.vehicleId;
+    document.getElementById('profileVehicleType').textContent = user.vehicleType;
+    document.getElementById('profileGpsId').textContent = user.gpsId;
+    document.getElementById('userProfile').style.display = 'block';
+}
+
+// Function to display journey data
+function displayJourneyData() {
+    // Check if fees and distances are arrays and not empty
+    if (Array.isArray(fees) && fees.length > 0 && Array.isArray(distances) && distances.length > 0) {
+        // Update the table rows with journey details
+        distances.forEach((distance, index) => {
+            const fee = fees[index];
+            const journeyNumber = index + 1;
+
+            // Update table cells with journey data
+            const distanceCell = document.getElementById(`j${journeyNumber}-distance`);
+            const feeCell = document.getElementById(`j${journeyNumber}-fees`);
+
+            if (distanceCell && feeCell) {
+                distanceCell.textContent = `${distance.toFixed(2)} m`;
+                feeCell.textContent = `Rs${fee.toFixed(2)}`;
+            }
+        });
+
+        // Log the distances and fees for debugging
+        console.log("Distances:", distances);
+        console.log("Fees:", fees);
+
+        // Update the total distance and total toll
+        const totalDistance = distances.reduce((acc, curr) => acc + parseFloat(curr), 0).toFixed(2);
+        const totalToll = fees.reduce((acc, curr) => acc + parseFloat(curr), 0).toFixed(2);
+
+        document.getElementById('totalDistance').textContent = `${totalDistance} m`;
+        document.getElementById('totalToll').textContent = `Rs${totalToll}`;
+
+    } else {
+        console.error('Fees or distances array is not valid or is empty.');
+    }
+}
+// Event listener for login form submission
+document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
+
+// Event listener for register form submission
+document.getElementById('registerFormElem').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const password = document.getElementById('newPassword').value;
+    if (!validatePassword(password)) {
+        alert('Password must be at least 8 characters long and contain at least one number, one symbol, and one uppercase letter.');
+        return;
+    }
+    // Handle registration logic if required
+});
+// Function to show the status content
+function showStatusContent() {
+    document.getElementById('statusContent').style.display = 'block';
+}
+// Function to hide the status content
+function hideStatusContent() {
+    document.getElementById('statusContent').style.display = 'none';
+}
+function showAboutusContent() {
+    document.getElementById('aboutusContent').style.display = 'block';
+}
+// Function to hide the about us content
+function hideAboutusContent() {
+    document.getElementById('aboutusContent').style.display = 'none';
+}
+function showIntroduction() {
+    document.getElementById('introduction').style.display = 'block';
+}
+
+function hideIntroduction() {
+    document.getElementById('introduction').style.display = 'none';
+}
+
+function showGpsTollSystem() {
+    document.getElementById('gpsTollSystem').style.display = 'block';
+}
+
+function hideGpsTollSystem() {
+    document.getElementById('gpsTollSystem').style.display = 'none';
+}
+// Function to validate password based on the given criteria
+function validatePassword(password) {
+    const minLength = 8;
+    const hasNumber = /\d/;
+    const hasSymbol = /[!@#$%^&*(),.?":{}|<>]/;
+    const hasUpperCase = /[A-Z]/;
+
+    return password.length >= minLength && hasNumber.test(password) && hasSymbol.test(password) && hasUpperCase.test(password);
+}
+
+// Event listener for registration link click
+document.getElementById('registerLink').addEventListener('click', function(event) {
+    event.preventDefault();
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'block';
+});
+
+// Fetch user data on page load
+fetchUserData();
+enableTabs();
