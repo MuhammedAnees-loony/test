@@ -449,14 +449,15 @@ footer p {
 #qrCodeContainer {
     text-align: center;
     margin-top: 20px;
+    max-width: 150px; /* Reduce the max width to make the container narrower */
+    margin: 0 auto; /* Center the container */
 }
-
 #qrCodeContainer img {
     max-width: 100%;
     height: auto;
     margin-bottom: 10px;
+    width: 120px; /* Adjust the width of the QR code image accordingly */
 }
-
 /* Cubes Hosting */
 .ch-container {
     display: flex;
