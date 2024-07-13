@@ -41,23 +41,12 @@ function parseCSV(data) {
     }
     return result;
 }
-// Wait for the document to load
 document.addEventListener('DOMContentLoaded', function() {
-    // Find the Pay button element
     var payButton = document.getElementById('payButton');
-    
-    // Add click event listener to the Pay button
     payButton.addEventListener('click', function() {
-        // Here you can implement the payment logic
-        // For example, you can redirect to a payment gateway or perform an AJAX request
-        
-        // Replace this with your payment handling logic
         alert('Redirecting to payment gateway...');
-        
-        // For demonstration purposes, let's simulate a payment success after 2 seconds
         setTimeout(function() {
             alert('Payment successful!');
-            // You can add further actions here, such as updating UI or navigating to another page
         }, 2000); // 2000 milliseconds = 2 seconds
     });
 });
@@ -67,7 +56,6 @@ function handleLogin(event) {
     event.preventDefault();
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
-    // Check if the provided username and password match any user in the array
     const user = users.find(user => user.username === username && user.password === password);
 
     if (user) {
@@ -82,8 +70,6 @@ function handleLogin(event) {
         alert('Invalid username or password');
     }
 }
-
-// Function to fetch journey data
 function fetchJourneyData(vehicleId) {
     const apiUrl = 'http://127.0.0.1:5000/predict'; // Replace with your Flask API URL
 
@@ -109,16 +95,10 @@ function fetchJourneyData(vehicleId) {
     .then(data => {
         console.log('Journey data fetched successfully:', data);
             let jsonObject = JSON.parse(data);
-
-// Initialize arrays to store distances and fees
-           
-// Loop through the JSON object and extract values
             jsonObject.forEach(item => {
                 distances.push(item.distance);
                 fees.push(item.fee);
             });
-
-// Now you have two arrays: distances and fees
             console.log("Distances:", distances);
             console.log("Fees:", fees);
     })
@@ -126,8 +106,6 @@ function fetchJourneyData(vehicleId) {
         console.error('Error making POST request to Flask API:', error);
     });
 }
-
-// Function to enable status and about us tabs
 function enableTabs() {
     document.getElementById('statusTab').classList.remove('disabled');
     document.getElementById('aboutusTab').classList.remove('disabled');
@@ -196,11 +174,7 @@ function enableTabs() {
         registerForm.style.display = 'none';
     } 
 }
-
-// Event listener for login form submission
 document.getElementById('loginFormElem').addEventListener('submit', handleLogin);
-
-// Event listener for register form submission
 document.getElementById('registerFormElem').addEventListener('submit', function(event) {
     event.preventDefault();
     const password = document.getElementById('newPassword').value;
@@ -229,13 +203,11 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(data => {
         var mapHtml = data.map_html;
-
-        // Create an iframe element to load the map HTML
         var iframe = document.createElement('iframe');
         iframe.style.width = '100%';
         iframe.style.height = '400px';
         iframe.style.border = 'none';
-        iframe.srcdoc = mapHtml; // Embed the map HTML directly into the iframe
+        iframe.srcdoc = mapHtml;
 
         mapContainer.appendChild(iframe); // Append the iframe to mapContainer
     })
@@ -259,7 +231,6 @@ function showUserProfile(user) {
 
 // Function to display journey data
 function displayJourneyData() {
-    // Check if fees and distances are arrays and not empty
     if (Array.isArray(fees) && fees.length > 0 && Array.isArray(distances) && distances.length > 0) {
         // Update the table rows with journey details
         distances.forEach((distance, index) => {
@@ -275,8 +246,6 @@ function displayJourneyData() {
                 feeCell.textContent = `Rs${fee.toFixed(2)}`;
             }
         });
-
-        // Log the distances and fees for debugging
         console.log("Distances:", distances);
         console.log("Fees:", fees);
 
@@ -302,7 +271,6 @@ document.getElementById('registerFormElem').addEventListener('submit', function(
         alert('Password must be at least 8 characters long and contain at least one number, one symbol, and one uppercase letter.');
         return;
     }
-    // Handle registration logic if required
 });
 // Function to show the status content
 function showStatusContent() {
