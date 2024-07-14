@@ -18,9 +18,9 @@ function fetchUserData() {
     fetch(userCsvPath)
         .then(response => response.text())
         .then(data => {
-            console.log('haii');
+           // console.log('haii');
             users = parseCSV(data);
-            console.log('User data fetched:', users);  // Log the fetched user data for debugging
+           // console.log('User data fetched:', users);  // Log the fetched user data for debugging
         })
         .catch(error => console.error('Error fetching user data:', error));
 }
@@ -93,14 +93,14 @@ function fetchJourneyData(vehicleId) {
         return response.json(); // Expecting JSON response
     })
     .then(data => {
-        console.log('Journey data fetched successfully:', data);
+       // console.log('Journey data fetched successfully:', data);
             let jsonObject = JSON.parse(data);
             jsonObject.forEach(item => {
                 distances.push(item.distance);
                 fees.push(item.fee);
             });
-            console.log("Distances:", distances);
-            console.log("Fees:", fees);
+          //  console.log("Distances:", distances);
+          //  console.log("Fees:", fees);
     })
     .catch(error => {
         console.error('Error making POST request to Flask API:', error);
@@ -246,8 +246,8 @@ function displayJourneyData() {
                 feeCell.textContent = `Rs${fee.toFixed(2)}`;
             }
         });
-        console.log("Distances:", distances);
-        console.log("Fees:", fees);
+       // console.log("Distances:", distances);
+       // console.log("Fees:", fees);
 
         // Update the total distance and total toll
         const totalDistance = distances.reduce((acc, curr) => acc + parseFloat(curr), 0).toFixed(2);
